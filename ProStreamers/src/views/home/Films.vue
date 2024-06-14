@@ -8,7 +8,7 @@
                 <h2>{{ film.title }}</h2>
                 <p>{{ film.movie_type }}</p>
                 <p>{{ film.year }}</p>
-                Minutes: <p>{{ film.minutes }}</p>
+                Minut<p>{{ film.minutes }}</p>
 
 
             </div>
@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         fetchFilms() {
-            const url = "http://127.0.0.1:8000/api/movies/all";
+            const url = "http://chrisouboter.com/api/movies/all";
 
             axios.get(url)
                 .then(response => {
