@@ -1,85 +1,36 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
   <RouterView />
+  <footer>
+    <nav class="h-12 grid grid-cols-4 fixed left-0 bottom-0 w-full backdrop-blur-xl text-white text-center">
+      <RouterLink to="/" active-class="text-gray-900 border-b-2 border-black"
+        class="group text-gray-400 font-bold py-2 px-4 hover:text-black duration-700">
+        <i class="fa-solid fa-play fa-xl"></i>
+      </RouterLink>
+      <RouterLink to="/favorites" active-class="text-gray-900 border-b-2 border-black"
+        class="text-gray-400 font-bold py-2 px-4 hover:text-black duration-700">
+        <i class="fa-solid fa-star fa-xl"></i>
+      </RouterLink>
+      <RouterLink to="/search" active-class="text-gray-900 border-b-2 border-black"
+        class="text-gray-400 font-bold py-2 px-4 hover:text-black duration-700">
+        <i class="fa-solid fa-magnifying-glass fa-xl"></i>
+      </RouterLink>
+      <RouterLink to="/settings" active-class="text-gray-900 border-b-2 border-black"
+        class="text-gray-400 font-bold py-2 px-4 hover:text-black duration-700">
+        <i class="fa-solid fa-gear fa-xl"></i>
+      </RouterLink>
+    </nav>
+  </footer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style>
+/* .fontA1:hover {
+  display: none;
 }
 
-.logo {
+.fontA1:hover+.fontA2 {
   display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+} */
 </style>
