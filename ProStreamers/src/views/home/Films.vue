@@ -8,7 +8,20 @@
           class=" block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
           placeholder="Search">
       </div>
-      <Dropdown />
+      <div>Selected: {{ selected }}</div>
+
+      <select v-model="selected" class="w-full">
+        <option>Alles</option>
+      </select>
+      <input type="number" class="m-auto w-full mt-2" min="10" max="200" />
+      <div class="mt-2">
+        <input type="checkbox" id="choose-me" class="peer hidden mt-10" />
+        <label for="choose-me"
+          class="select-none cursor-pointer rounded-lg border-2 border-gray-200
+    px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
+          Nieuwste</label>
+      </div>
+      <!-- <Dropdown /> -->
     </div>
     <div class="film-content col-span-3">
       <div v-if="loading" class="loading-screen">
@@ -16,11 +29,11 @@
       </div>
       <div v-else class="film-cards grid-cols-3 overflow-auto h-screen">
         <div v-for="d in data" :key="d.id" class="film-card col-span-1">
-          <h1>{{ d.title  }}</h1>
-          <h1>{{ d.id  }}</h1>
+          <h1>{{ d.title }}</h1>
+          <h1>{{ d.genre }}</h1>
         </div>
       </div>
-      <div class="absolute">
+      <div class="absolute mt-1">
         <input type="checkbox" id="choose-me" class="peer hidden w-full" />
         <label for="choose-me"
           class="select-none cursor-pointer rounded-lg border-2 border-gray-200
