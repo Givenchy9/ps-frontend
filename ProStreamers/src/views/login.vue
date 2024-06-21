@@ -85,6 +85,8 @@
                     }
 
                 } catch (e) {
+                    this.loading = false;
+
                     this.error = "An error occured: " + e;
 
                 }
