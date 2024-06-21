@@ -24,8 +24,8 @@
       <!-- <Dropdown /> -->
     </div>
     <div class="film-content col-span-3">
-      <div v-if="loading" class="loading-screen">
-        Loading Movies<i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+      <div v-if="loading" class="p-4 loading-screen">
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
       <div v-else class="film-cards grid-cols-3 overflow-auto h-screen">
         <div v-for="d in data" :key="d.id" class="film-card col-span-1">
