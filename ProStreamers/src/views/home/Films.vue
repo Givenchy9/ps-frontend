@@ -15,14 +15,9 @@
         Loading Movies<i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
       <div v-else class="film-cards grid-cols-3 overflow-auto h-screen">
-        <div v-for="d in data" :key="data.id" class="film-card col-span-1">
-          <h2>{{ d.title }}</h2>
-          Genre:
-          <p>{{ d.movie_type }}</p>
-          Jaar:
-          <p>{{ d.year }}</p>
-          Minuten:
-          <p>{{ d.minutes }}</p>
+        <div v-for="d in data" :key="d.id" class="film-card col-span-1">
+          <h1>{{ d.title  }}</h1>
+          <h1>{{ d.id  }}</h1>
         </div>
       </div>
       <div class="absolute">
@@ -61,8 +56,7 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          this.films = response.data.data
-          console.log(response.data.data);
+          this.data = response.data.data;
         })
         .catch((error) => {
           console.error('Error fetching films', error)
