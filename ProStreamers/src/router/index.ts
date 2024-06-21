@@ -83,7 +83,6 @@ router.beforeEach((to, from, next) => {
     if (!token) {
       next({
         path: 'login',
-        query: { redirect: to.fullPath }
       });
     } else {
       next();
