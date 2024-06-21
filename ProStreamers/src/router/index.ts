@@ -1,12 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Films from '../views/home/Films.vue';
-import Series from '../views/home/Series.vue';
-import Latest from '../views/home/Latest.vue';
+import Films from '../views/home/Films.vue'
+import Series from '../views/home/Series.vue'
+import Latest from '../views/home/Latest.vue'
 // import User from '../views/settings/User.vue';
-import Endpoint from '../views/settings/Endpoint.vue';
+import Endpoint from '../views/settings/Endpoint.vue'
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/films' // redirect to films
+  },
   {
     path: '/',
     name: 'home',
@@ -16,19 +20,19 @@ const routes = [
       {
         path: 'films',
         name: 'films',
-        component: Films,
+        component: Films
       },
       {
         path: 'series',
         name: 'series',
-        component: Series,
+        component: Series
       },
       {
         path: 'latest',
         name: 'latest',
-        component: Latest,
-      },
-    ],
+        component: Latest
+      }
+    ]
   },
   {
     path: '/favorites',
@@ -55,16 +59,16 @@ const routes = [
     children: [
       {
         path: 'user',
-        name: 'user',
+        name: 'user'
         // Uncomment and use the correct component when needed
         // component: User,
       },
       {
         path: 'endpoint',
         name: 'endpoint',
-        component: Endpoint,
-      },
-    ],
+        component: Endpoint
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)*',
@@ -77,19 +81,19 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!token) {
       next({
-        path: 'login',
-      });
+        path: 'login'
+      })
     } else {
-      next();
+      next()
     }
   } else {
-    next();
+    next()
   }
-});
+})
 
 export default router
