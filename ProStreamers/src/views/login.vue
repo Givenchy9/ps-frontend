@@ -8,7 +8,7 @@
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in</h2>
         </div>
             <form class="space-y-6" @submit.prevent="handleSubmit">
-            <p class="mt-10 bg-red-400 text-center text-lg text-black">{{ this.error }}</p>
+            <p class="mt-10 bg-red-400 rounded-sm text-center text-lg text-black">{{ this.error }}</p>
 
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
