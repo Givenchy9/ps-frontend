@@ -15,7 +15,7 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
-          path: '/Films',
+          path: '/Films', //KIJKEN!!!!!
           name: 'Films',
           component: Films,
         },
