@@ -78,9 +78,6 @@
                         this.error = "Please try again";
                     }
 
-                    
-
-
                 } catch (e) {
                     this.error = "An error occured: " + e;
 
