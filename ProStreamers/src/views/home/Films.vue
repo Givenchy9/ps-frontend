@@ -1,6 +1,6 @@
 <template>
   <div class="Films grid grid-cols-4 gap-8">
-    <div class="bg-red-500 col-span-1 h-96">
+    <div class="col-span-1 h-96">
       <div class="relative w-1/2 m-auto">
         <i
           class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
@@ -28,9 +28,10 @@
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
       <div v-else class="film-cards grid-cols-3 overflow-auto h-screen">
-        <div v-for="d in data" :key="d.id" class="film-card col-span-1">
-          <h1>{{ d.title }}</h1>
-          <h1>{{ d.genre }}</h1>
+        <div v-for="d in data" :key="d.id" class="film-card col-span-1 w-56">
+          <img src='https://i.imgur.com/VtyOj1x.jpg' class="poster-image w-56"/>
+          <h1 class="movie-title">{{ d.title }}</h1>
+          <h2 class="movie-genre">{{ d.genre }}</h2>
         </div>
       </div>
       <div class="absolute mt-1">
@@ -95,12 +96,12 @@ export default {
   height: 520px;
 }
 
-.film-card {
+/* .film-card {
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .loading-screen {
   position: absolute;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 let token = localStorage.getItem('token');
 </script>
 

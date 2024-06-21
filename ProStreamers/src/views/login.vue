@@ -30,7 +30,7 @@
 
                 <div>
                     <button type="submit"
-                        class="flex shadow-xl w-full justify-center rounded-md bg-violet-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-violet-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        class="flex shadow-xl w-full justify-center rounded-md bg-violet-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         <div v-if="!loading">Login</div>
                         <div v-if="loading" class="loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
