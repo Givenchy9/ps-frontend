@@ -13,7 +13,7 @@
       <select v-model="selected" class="w-full">
         <option>Alles</option>
       </select>
-      <input type="number" class="m-auto w-full mt-2" min="10" max="200" />
+      <input type="number" class="m-auto w-full mt-2" min="10" max="600" />
       <div class="mt-2">
         <input type="checkbox" id="choose-me" class="peer hidden mt-10" />
         <label for="choose-me"
@@ -28,7 +28,7 @@
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
       <div v-else class="film-cards grid-cols-3 overflow-auto h-screen">
-        <div v-for="d in data" :key="d.id" class="film-card col-span-1 w-56">
+        <div v-for="d in data" :key="d.id" class="film-card col-span-1 w-56 rounded-sm">
           <img src='https://i.imgur.com/VtyOj1x.jpg' class="poster-image w-56"/>
           <h1 class="movie-title">{{ d.title }}</h1>
           <h2 class="movie-genre">{{ d.genre }}</h2>
@@ -36,10 +36,7 @@
       </div>
       <div class="absolute mt-1">
         <input type="checkbox" id="choose-me" class="peer hidden w-full" />
-        <label for="choose-me"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200
-    px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
-          Filters</label>
+
       </div>
     </div>
   </div>
