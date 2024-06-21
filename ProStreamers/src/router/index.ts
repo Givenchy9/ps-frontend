@@ -6,76 +6,91 @@ import Latest from '../views/home/Latest.vue';
 // import User from '../views/settings/User.vue';
 import Endpoint from '../views/settings/Endpoint.vue';
 
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'films',
+        name: 'films',
+        component: Films,
+      },
+      {
+        path: 'series',
+        name: 'series',
+        component: Series,
+      },
+      {
+        path: 'latest',
+        name: 'latest',
+        component: Latest,
+      },
+    ],
+  },
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: () => import('../views/Favorites.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('../views/Search.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login.vue')
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('../views/Settings.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'user',
+        name: 'user',
+        // Uncomment and use the correct component when needed
+        // component: User,
+      },
+      {
+        path: 'endpoint',
+        name: 'endpoint',
+        component: Endpoint,
+      },
+    ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/' // Redirect any unknown paths to the home
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      children: [
-        {
-          path: '/Films', //KIJKEN!!!!!
-          name: 'Films',
-          component: Films,
-        },
-        {
-          path: '/Series',
-          name: 'Series',
-          component: Series,
-        },
-        {
-          path: '/Latest',
-          name: 'Latest',
-          component: Latest,
-        },
-      ],
-    },
-    {
-      path: '/favorites',
-      name: 'favorites',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Favorites.vue')
-    },
-    {
-      path: '/search',
-      name: 'search',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Search.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/login.vue')
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Settings.vue'),
-      children: [
-        {
-          path: '/User',
-          name: 'User',
-          // component: User,
-        },
-        {
-          path: '/Endpoint',
-          name: 'Endpoint',
-          component: Endpoint,
-        },
-      ],
-    }
-  ]
+  routes
 })
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!token) {
+      next({
+        path: 'login',
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
