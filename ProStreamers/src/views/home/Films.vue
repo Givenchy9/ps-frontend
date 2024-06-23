@@ -1,7 +1,7 @@
 <template>
   <div class="Films flex">
-    <div class="filter-section fixed h-full p-4 w-1/4 bg-white shadow-lg">
-      <div class="relative w-3/4 m-auto">
+    <div class="filter-section fixed h-full p-4 w-1/12 bg-white shadow-lg">
+      <div class="relative w-full m-auto">
         <i
           class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
         ></i>
@@ -9,6 +9,7 @@
           type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
           placeholder="Search"
+          v-model="search"
         />
       </div>
       <h2>Filter genre</h2>
@@ -50,7 +51,7 @@ export default {
       data: [],
       loading: false,
       selected: 'Alles',
-      search: null
+      search: ''
     }
   },
   mounted() {
@@ -60,8 +61,8 @@ export default {
     selected() {
       this.filter()
     },
-    search() {
-      this.search()
+    search(newSearch) {
+      this.searchData(newSearch)
     }
   },
   methods: {
@@ -74,7 +75,7 @@ export default {
         .then((response) => {
           if (this.selected != 'Alles') {
             this.data = response.data.data.filter((film) => {
-              return film.genre.includes(this.selected)
+              return film.genre.toLowerCase().includes(this.selected.toLowerCase())
             })
           } else {
             this.data = response.data.data
@@ -89,6 +90,16 @@ export default {
     },
     fetchFilms() {
       this.filter()
+    },
+    searchData(newSearch) {
+      console.log(newSearch)
+      if (newSearch.length == 0) {
+        this.fetchFilms()
+      } else {
+        this.data = this.data.filter((film) => {
+          return film.title.toLowerCase().includes(newSearch.toLowerCase())
+        })
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
-    <img :src="poster" class="rounded-xl poster-image w-56" />
+    <img :src="getPoster()" class="rounded-xl poster-image w-56" />
     <!-- Details Container -->
     <div
       class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl"
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import moment from 'moment'
 import router from '@/router/index.ts'
 export default {
@@ -48,16 +49,26 @@ export default {
         'https://i.imgur.com/NQLz1bz.jpg',
         'https://i.imgur.com/OtHXYcV.jpg'
       ],
-      showOverlay: true
-    }
-  },
-  computed: {
-    poster() {
-      const randomIndex = Math.floor(Math.random() * this.images.length)
-      return this.images[randomIndex]
+      showOverlay: true,
+      poster: ''
     }
   },
   methods: {
+    // GET POSTER FROM ACTUAL MOVIE SOURCE
+    getPoster() {
+      let url = 'http://www.omdbapi.com/?t=' + this.film.title + '&apikey=1bc03fd4'
+      console.log(url)
+      axios
+        .get(url)
+        .then((response) => {
+          this.poster = response.data.Poster
+        })
+        .catch((error) => {
+          console.error('Error fetching films', error)
+        })
+
+      return this.poster
+    },
     timeAgo(input) {
       return moment(input).fromNow()
     },
@@ -67,7 +78,7 @@ export default {
   }
 }
 </script>
-
+<!--  1bc03fd4 KEY VOOR OMDBAPI -->
 <style scoped>
 .film-card {
   position: relative;
