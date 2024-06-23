@@ -11,19 +11,16 @@
           placeholder="Search"
         />
       </div>
-      <div class="mt-4">Selected: {{ selected }}</div>
-      <select v-model="selected" class="w-full mt-2">
+      <h2>Filter genre</h2>
+      <select v-model="selected" class="w-full mt-2 p-2">
         <option>Alles</option>
+        <option>Animation</option>
+        <option>Action</option>
+        <option>Adventure</option>
+        <option>Horror</option>
       </select>
-      <input type="number" class="w-full mt-2" min="10" max="600" />
       <div class="mt-4">
         <input type="checkbox" id="choose-me-1" class="peer hidden mt-10" />
-        <label
-          for="choose-me-1"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
-        >
-          Nieuwste
-        </label>
       </div>
     </div>
     <div class="film-content ml-1/4 w-3/4 overflow-y-auto h-screen p-4">
@@ -52,21 +49,36 @@ export default {
     return {
       data: [],
       loading: false,
-      selected: 'Alles'
+      selected: 'Alles',
+      search: null
     }
   },
   mounted() {
     this.fetchFilms()
   },
+  watch: {
+    selected() {
+      this.filter()
+    },
+    search() {
+      this.search()
+    }
+  },
   methods: {
-    fetchFilms() {
+    filter() {
       this.loading = true
       const url = 'http://chrisouboter.com/api/all/movie'
 
       axios
         .get(url)
         .then((response) => {
-          this.data = response.data.data
+          if (this.selected != 'Alles') {
+            this.data = response.data.data.filter((film) => {
+              return film.genre.includes(this.selected)
+            })
+          } else {
+            this.data = response.data.data
+          }
         })
         .catch((error) => {
           console.error('Error fetching films', error)
@@ -74,6 +86,9 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    fetchFilms() {
+      this.filter()
     }
   }
 }
