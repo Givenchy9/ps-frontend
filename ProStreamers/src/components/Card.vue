@@ -1,7 +1,6 @@
 <template>
-  <div class="film-card col-span-1 w-56 rounded-sm relative">
+  <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
     <img :src="poster" class="rounded-xl poster-image w-56" />
-
     <!-- Details Container -->
     <div
       class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl"
@@ -22,7 +21,7 @@
         v-if="showOverlay"
         class="play-overlay flex items-center justify-center absolute inset-0 bg-black bg-opacity-25"
       >
-        <button @click="redirectToDetails" class="text-white text-4xl">
+        <button v-if="showOverlay" class="text-white text-4xl">
           <i class="fas fa-play-circle"></i>
         </button>
       </div>
@@ -63,7 +62,6 @@ export default {
       return moment(input).fromNow()
     },
     redirectToDetails() {
-      console.log('test')
       router.push({ name: 'details', params: { filmId: this.film.id } })
     }
   }
@@ -73,6 +71,7 @@ export default {
 <style scoped>
 .film-card {
   position: relative;
+  cursor: pointer;
 }
 
 .details-container {
