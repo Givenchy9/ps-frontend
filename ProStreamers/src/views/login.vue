@@ -99,7 +99,9 @@ export default {
         })
         const data = await response.json()
         if (data.success) {
+          console.log(data.user)
           localStorage.setItem('token', data.token)
+          localStorage.setItem('user', JSON.stringify(data.user))
           this.error = ''
           this.loading = false
           this.$router.push('/films')

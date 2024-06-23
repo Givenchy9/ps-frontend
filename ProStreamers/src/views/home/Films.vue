@@ -29,7 +29,7 @@
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
       <div class="film-cards">
-        <FilmCard v-for="d in data" :key="d.id" :film="d" />
+        <!-- <FilmCard v-for="d in data" :key="d.id" :film="d" /> -->
       </div>
     </div>
   </div>
