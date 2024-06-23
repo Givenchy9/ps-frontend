@@ -58,7 +58,7 @@ export default {
   methods: {
     fetchFilms() {
       this.loading = true
-      const url = 'http://chrisouboter.com/api/all/latest'
+      const url = 'http://chrisouboter.com/api/latest'
 
       axios
         .get(url)

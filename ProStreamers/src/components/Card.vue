@@ -10,15 +10,21 @@
 
       <!-- Relative length/episodes -->
       <div class="flex space-x-2">
-        <h2 v-if="film.content == 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
-        <h2 v-if="film.content == 'Serie'" class="movie-genre text-sm">
+        <h2 v-if="film.content === 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
+        <h2 v-if="film.content === 'Serie'" class="movie-genre text-sm">
           {{ film.episodes }} episodes /
         </h2>
         <p class="text-sm">{{ timeAgo(film.created_at) }}</p>
+        <h2 class="movie-genre text-sm rounded-md">{{ film.genre }}</h2>
+      </div>
 
-        <h2 class="movie-genre text-sm rounded-md">
-          {{ film.genre }}
-        </h2>
+      <div
+        v-if="showOverlay"
+        class="play-overlay flex items-center justify-center absolute inset-0 bg-black bg-opacity-25"
+      >
+        <button @click="redirectToDetails" class="text-white text-4xl">
+          <i class="fas fa-play-circle"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -26,7 +32,7 @@
 
 <script>
 import moment from 'moment'
-
+import router from '@/router/index.ts'
 export default {
   name: 'Card',
   props: {
@@ -42,7 +48,8 @@ export default {
         'https://i.imgur.com/010nWRH.jpg',
         'https://i.imgur.com/NQLz1bz.jpg',
         'https://i.imgur.com/OtHXYcV.jpg'
-      ]
+      ],
+      showOverlay: true
     }
   },
   computed: {
@@ -54,33 +61,33 @@ export default {
   methods: {
     timeAgo(input) {
       return moment(input).fromNow()
+    },
+    redirectToDetails() {
+      console.log('test')
+      router.push({ name: 'details', params: { filmId: this.film.id } })
     }
   }
 }
 </script>
 
-<style>
-.film-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  height: 680px;
-}
+<style scoped>
 .film-card {
   position: relative;
 }
 
 .details-container {
-  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  transition: background-color 0.3s ease;
 }
 
 .poster-image {
   display: block;
   width: 100%;
-  border-radius: 0.5rem 0.5rem 0 0; /* Rounded top corners */
+  border-radius: 0.5rem 0.5rem 0 0;
+  transition: filter 0.3s ease;
 }
 
 .movie-title {
@@ -94,5 +101,21 @@ export default {
 
 .text-sm {
   font-size: 0.875rem;
+}
+
+.play-overlay {
+  display: none;
+}
+
+.film-card:hover .poster-image {
+  filter: blur(5px); /* Adjust blur amount as needed */
+}
+
+.film-card:hover .details-container {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.film-card:hover .play-overlay {
+  display: flex;
 }
 </style>

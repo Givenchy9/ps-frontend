@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Films from '../views/home/Films.vue'
+
 import Series from '../views/home/Series.vue'
+import Details from '../views/Details.vue'
+
 import Latest from '../views/home/Latest.vue'
 // import User from '../views/settings/User.vue';
 import Endpoint from '../views/settings/Endpoint.vue'
@@ -31,6 +34,12 @@ const routes = [
         path: 'latest',
         name: 'latest',
         component: Latest
+      },
+      {
+        path: 'details/:filmId',
+        name: 'details',
+        component: Details,
+        props: true
       }
     ]
   },
