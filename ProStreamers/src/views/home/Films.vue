@@ -35,15 +35,18 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import axios from 'axios'
 import FilmCard from '@/components/Card.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   components: {
-    FilmCard
+    FilmCard,
+    Footer
   },
   data() {
     return {

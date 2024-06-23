@@ -35,15 +35,18 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import axios from 'axios'
 import FilmCard from '@/components/Card.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   components: {
-    FilmCard
+    FilmCard,
+    Footer
   },
   data() {
     return {
@@ -79,7 +82,6 @@ export default {
 <style scoped>
 .Films {
   height: 100vh;
-  overflow: hidden;
 }
 
 .filter-section {
@@ -94,7 +96,6 @@ export default {
   margin-left: 25%;
   width: 75%;
   height: 100%;
-  overflow-y: auto;
   padding: 1rem;
 }
 
