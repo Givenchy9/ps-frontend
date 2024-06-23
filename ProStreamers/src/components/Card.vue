@@ -43,12 +43,6 @@ export default {
   },
   data() {
     return {
-      images: [
-        'https://i.imgur.com/VtyOj1x.jpg',
-        'https://i.imgur.com/010nWRH.jpg',
-        'https://i.imgur.com/NQLz1bz.jpg',
-        'https://i.imgur.com/OtHXYcV.jpg'
-      ],
       showOverlay: true,
       poster: ''
     }
@@ -118,7 +112,7 @@ export default {
 }
 
 .film-card:hover .poster-image {
-  filter: blur(5px); /* Adjust blur amount as needed */
+  filter: blur(3px);
 }
 
 .film-card:hover .details-container {

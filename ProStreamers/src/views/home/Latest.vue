@@ -1,7 +1,7 @@
 <template>
   <div class="Films flex">
-    <div class="filter-section fixed h-full p-4 w-1/4 bg-white shadow-lg">
-      <div class="relative w-3/4 m-auto">
+    <div class="filter-section fixed h-full p-4 w-1/12 bg-white shadow-lg">
+      <div class="relative w-full m-auto">
         <i
           class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
         ></i>
@@ -9,21 +9,19 @@
           type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
           placeholder="Search"
+          v-model="search"
         />
       </div>
-      <div class="mt-4">Selected: {{ selected }}</div>
-      <select v-model="selected" class="w-full mt-2">
+      <h2>Filter genre</h2>
+      <select v-model="selected" class="w-full mt-2 p-2">
         <option>Alles</option>
+        <option>Animation</option>
+        <option>Action</option>
+        <option>Adventure</option>
+        <option>Horror</option>
       </select>
-      <input type="number" class="w-full mt-2" min="10" max="600" />
       <div class="mt-4">
         <input type="checkbox" id="choose-me-1" class="peer hidden mt-10" />
-        <label
-          for="choose-me-1"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-6 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
-        >
-          Nieuwste
-        </label>
       </div>
     </div>
     <div class="film-content ml-1/4 w-3/4 overflow-y-auto h-screen p-4">
@@ -52,21 +50,36 @@ export default {
     return {
       data: [],
       loading: false,
-      selected: 'Alles'
+      selected: 'Alles',
+      search: ''
     }
   },
   mounted() {
     this.fetchFilms()
   },
+  watch: {
+    selected() {
+      this.filter()
+    },
+    search(newSearch) {
+      this.searchData(newSearch)
+    }
+  },
   methods: {
-    fetchFilms() {
+    filter() {
       this.loading = true
       const url = 'http://chrisouboter.com/api/latest'
 
       axios
         .get(url)
         .then((response) => {
-          this.data = response.data.data
+          if (this.selected != 'Alles') {
+            this.data = response.data.data.filter((film) => {
+              return film.genre.toLowerCase().includes(this.selected.toLowerCase())
+            })
+          } else {
+            this.data = response.data.data
+          }
         })
         .catch((error) => {
           console.error('Error fetching films', error)
@@ -74,6 +87,19 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    fetchFilms() {
+      this.filter()
+    },
+    searchData(newSearch) {
+      console.log(newSearch)
+      if (newSearch.length == 0) {
+        this.fetchFilms()
+      } else {
+        this.data = this.data.filter((film) => {
+          return film.title.toLowerCase().includes(newSearch.toLowerCase())
+        })
+      }
     }
   }
 }
