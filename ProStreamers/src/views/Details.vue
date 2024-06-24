@@ -59,36 +59,67 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex">
-    <div class="Films flex">
-      <div v-if="loading" class="loading-screen">Loading...</div>
-      <div v-else class="film-content">
-        <img :src="poster" class="rounded-xl poster-image" />
-        <h1>Details for Film ID: {{ filmId }}</h1>
+  <div class="container">
+    <div v-if="loading" class="loading-screen">
+      <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+    </div>
+    <div v-else class="film-details">
+      <img :src="poster" class="poster-image w-92" />
+      <div class="details">
         <template v-if="data">
-          <p class="text-4xl">Title: {{ data.title }}</p>
-          <p class="text-2xl">Description: {{ data.description }}</p>
-          <p>Genre: {{ data.genre }}</p>
-          <p>Metascore: {{ rating }}/100</p>
+          <p class="title text-4xl">{{ data.title }}</p>
+          <p class="description text-2xl">Description: {{ data.description }}</p>
+          <div class="flex gap-2">
+            <p class="genre">{{ data.genre }}</p>
+          <p class="rating">Metascore: {{ rating }}/100</p>
 
-
-
-          <button class="bg-black text-white p-2 rounded-xl">Add to favorites</button>
+          </div>
+          <button class="add-favorites">Add to favorites</button>
           <Footer />
-
-        </template>
-        
-        <template v-else>
-          <p>No data available</p>
         </template>
       </div>
     </div>
   </div>
 </template>
 
-
-
-
 <style scoped>
-/* Add scoped styles here if needed */
+
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.film-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px; /* Adjust as needed */
+}
+
+.poster-image {
+  height: auto;
+  border-radius: 8px;
+}
+
+.details {
+  display: flex;
+  top: 0;
+  flex-direction: column;
+}
+
+.title, .description, .genre, .rating {
+  margin: 10px 0;
+}
+
+.add-favorites {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 250px;
+}
+
 </style>
