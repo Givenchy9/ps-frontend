@@ -12,13 +12,15 @@ export default defineComponent({
     const loading = ref(false)
     const data = ref(null)
     const poster = ref(null)
+    const rating = ref(null)
 
     const getPoster = (filmData) => {
       let url2 = 'http://www.omdbapi.com/?t=' + filmData.title + '&apikey=1bc03fd4';
       axios
         .get(url2)
         .then((response) => {
-          poster.value = response.data.Poster
+          poster.value = response.data.Poster;
+          rating.value = response.data.Metascore;
           loading.value = false
           console.log(response.data);
           console.log(response.data.Poster);
@@ -49,7 +51,8 @@ export default defineComponent({
       filmId,
       loading,
       data,
-      poster
+      poster,
+      rating
     }
   }
 })
@@ -66,6 +69,8 @@ export default defineComponent({
           <p class="text-4xl">Title: {{ data.title }}</p>
           <p class="text-2xl">Description: {{ data.description }}</p>
           <p>Genre: {{ data.genre }}</p>
+          <p>Metascore: {{ rating }}/100</p>
+
 
 
           <button class="bg-black text-white p-2 rounded-xl">Add to favorites</button>
