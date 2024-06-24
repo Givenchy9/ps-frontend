@@ -2,9 +2,7 @@
   <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
     <img :src="getPoster()" class="rounded-xl poster-image w-56" />
     <!-- Details Container -->
-    <div
-      class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl"
-    >
+    <div class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl">
       <h1 class="movie-title">{{ film.title }}</h1>
 
       <!-- Relative length/episodes -->
@@ -17,10 +15,8 @@
         <h2 class="movie-genre text-sm rounded-md">{{ film.genre }}</h2>
       </div>
 
-      <div
-        v-if="showOverlay"
-        class="play-overlay flex items-center justify-center absolute inset-0 bg-black bg-opacity-25"
-      >
+      <div v-if="showOverlay"
+        class="play-overlay flex items-center justify-center absolute inset-0 bg-black bg-opacity-25">
         <button v-if="showOverlay" class="text-white text-4xl">
           <i class="fas fa-play-circle"></i>
         </button>
@@ -85,12 +81,13 @@ export default {
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   transition: background-color 0.3s ease;
+  margin-bottom: 3px;
 }
 
 .poster-image {
   display: block;
   width: 100%;
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 0.5rem 0.5rem;
   transition: filter 0.3s ease;
 }
 
@@ -112,7 +109,8 @@ export default {
 }
 
 .film-card:hover .poster-image {
-  filter: blur(3px);
+  /* filter: blur(5px); */
+  border: solid white 4px;
 }
 
 .film-card:hover .details-container {

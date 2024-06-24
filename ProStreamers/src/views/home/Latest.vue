@@ -3,14 +3,10 @@
     <div class="filter-section fixed h-full p-4 w-1/12 bg-white shadow-lg">
       <div class="relative w-full m-auto">
         <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-        ></i>
-        <input
-          type="text"
+          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
+        <input type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search"
-          v-model="search"
-        />
+          placeholder="Search" v-model="search" />
       </div>
       <h2>Filter genre</h2>
       <select v-model="selected" class="w-full mt-2 p-2">
@@ -24,11 +20,11 @@
         <input type="checkbox" id="choose-me-1" class="peer hidden mt-10" />
       </div>
     </div>
-    <div class="film-content ml-1/4 w-3/4 overflow-y-auto h-screen p-4">
+    <div class="film-content ml-1/4 w-3/4 p-4 fixed">
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
-      <div class="film-cards">
+      <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
       </div>
     </div>
@@ -106,10 +102,6 @@ export default {
 </script>
 
 <style scoped>
-.Films {
-  height: 100vh;
-}
-
 .filter-section {
   position: fixed;
   left: 0;
@@ -121,7 +113,7 @@ export default {
 .film-content {
   margin-left: 25%;
   width: 75%;
-  height: 100%;
+  height: 700px;
   padding: 1rem;
 }
 

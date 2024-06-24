@@ -68,15 +68,15 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'user',
+        path: '/user',
         name: 'user'
         // Uncomment and use the correct component when needed
         // component: User,
       },
       {
-        path: 'endpoint',
+        path: '/endpoint',
         name: 'endpoint',
-        component: Endpoint
+        component: () => import('../views/settings/Endpoint.vue'),
       }
     ]
   },

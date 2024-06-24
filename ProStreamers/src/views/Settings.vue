@@ -1,6 +1,6 @@
 <template>
-    <div class="settings backdrop-blur-xl border-2 border-gray-300 rounded-full w-1/2 m-auto">
-        <p class="text-center font-bold text-xl">Settings</p>
+    <div class="search backdrop-blur-xl border-2 border-gray-300 rounded-full w-1/2 m-auto">
+        <p class="text-center font-bold text-xl">Favorites</p>
     </div>
     <div class="grid grid-cols-4">
         <div class=" col-span-1 h-96 p-2">
@@ -19,7 +19,25 @@
             <router-view></router-view>
         </div>
     </div>
+    <div class="favorites-container">
+        <Footer />
+    </div>
 </template>
-<script lang="ts" setup>
+
+<script setup>
+import Footer from '@/components/Footer.vue'
 </script>
-<style></style>
+
+<style scoped>
+.favorites-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Full height of the viewport */
+}
+
+.favorites-content {
+    flex-grow: 1;
+    /* Allow the content to grow and take up available space */
+}
+</style>

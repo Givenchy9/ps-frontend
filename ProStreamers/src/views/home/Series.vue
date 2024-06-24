@@ -1,34 +1,36 @@
 <template>
   <div class="Films flex">
-    <div class="filter-section fixed h-full p-4 w-1/12 bg-white shadow-lg">
+    <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
       <div class="relative w-full m-auto">
         <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-        ></i>
-        <input
-          type="text"
+          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
+        <input type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search"
-          v-model="search"
-        />
+          placeholder="Search" v-model="search" />
       </div>
-      <h2>Filter genre</h2>
-      <select v-model="selected" class="w-full mt-2 p-2">
-        <option>Alles</option>
-        <option>Animation</option>
-        <option>Action</option>
-        <option>Adventure</option>
-        <option>Horror</option>
-      </select>
-      <div class="mt-4">
-        <input type="checkbox" id="choose-me-1" class="peer hidden mt-10" />
+      <div class="rounded-xl bg-gray-200">
+        <h2 class="text-center mt-2">Filter genre</h2>
+        <select v-model="selected" class="w-full rounded-full bg-gray-200">
+          <option>All</option>
+          <option>Animation</option>
+          <option>Action</option>
+          <option>Adventure</option>
+          <option>Horror</option>
+        </select>
+      </div>
+      <div class="mt-2">
+        <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
+        <label for="choose-me"
+          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
+          Alphabetical </label>
       </div>
     </div>
-    <div class="film-content ml-1/4 w-3/4 overflow-y-auto h-screen p-4">
+    <div class="film-content ml-1/4 w-3/4 p-4 fixed">
+      <p>Genre: {{ selected }}</p>
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>
-      <div class="film-cards">
+      <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
       </div>
     </div>
@@ -36,80 +38,95 @@
   <Footer />
 </template>
 
-<script>
+<script lang="ts">
+import { ref, onMounted, watch, defineComponent } from 'vue'
 import axios from 'axios'
 import FilmCard from '@/components/Card.vue'
 import Footer from '@/components/Footer.vue'
 
-export default {
+interface Film {
+  id: number;
+  title: string;
+  genre: string;
+}
+
+export default defineComponent({
   components: {
     FilmCard,
     Footer
   },
-  data() {
-    return {
-      data: [],
-      loading: false,
-      selected: 'Alles',
-      search: ''
+  setup() {
+    const data = ref<Film[]>([])
+    const loading = ref(false)
+    const selected = ref('All')
+    const search = ref('')
+    const alfa = ref(false)
+
+    const fetchFilms = () => {
+      filter()
     }
-  },
-  mounted() {
-    this.fetchFilms()
-  },
-  watch: {
-    selected() {
-      this.filter()
-    },
-    search(newSearch) {
-      this.searchData(newSearch)
-    }
-  },
-  methods: {
-    filter() {
-      this.loading = true
-      const url = 'http://chrisouboter.com/api/all/serie'
+
+    const filter = () => {
+      loading.value = true
+      const url = 'http://chrisouboter.com/api/all/series'
 
       axios
         .get(url)
         .then((response) => {
-          if (this.selected != 'Alles') {
-            this.data = response.data.data.filter((film) => {
-              return film.genre.toLowerCase().includes(this.selected.toLowerCase())
+          let films = response.data.data
+          if (selected.value !== 'All') {
+            films = films.filter((film: Film) => {
+              return film.genre.toLowerCase().includes(selected.value.toLowerCase())
             })
-          } else {
-            this.data = response.data.data
           }
+
+          if (alfa.value) {
+            films = films.sort((a: Film, b: Film) => {
+              return a.title.localeCompare(b.title)
+            })
+          }
+
+          data.value = films
         })
         .catch((error) => {
           console.error('Error fetching films', error)
         })
         .finally(() => {
-          this.loading = false
+          loading.value = false
         })
-    },
-    fetchFilms() {
-      this.filter()
-    },
-    searchData(newSearch) {
-      console.log(newSearch)
-      if (newSearch.length == 0) {
-        this.fetchFilms()
+    }
+
+    const searchData = (newSearch: string) => {
+      if (newSearch.length === 0) {
+        fetchFilms()
       } else {
-        this.data = this.data.filter((film) => {
+        data.value = data.value.filter((film: Film) => {
           return film.title.toLowerCase().includes(newSearch.toLowerCase())
         })
       }
     }
+
+    onMounted(fetchFilms)
+
+    watch(selected, filter)
+    watch(search, searchData)
+    watch(alfa, filter)
+
+    return {
+      data,
+      loading,
+      selected,
+      search,
+      alfa,
+      fetchFilms,
+      filter,
+      searchData
+    }
   }
-}
+})
 </script>
 
 <style scoped>
-.Films {
-  height: 100vh;
-}
-
 .filter-section {
   position: fixed;
   left: 0;
@@ -121,7 +138,7 @@ export default {
 .film-content {
   margin-left: 25%;
   width: 75%;
-  height: 100%;
+  height: 700px;
   padding: 1rem;
 }
 
