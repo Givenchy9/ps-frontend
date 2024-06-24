@@ -1,25 +1,24 @@
 <template>
-  <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
+  <div class="film-card col-span-1 w-56 rounded-sm relative">
     <img :src="getPoster()" class="rounded-xl poster-image w-56" />
+
     <!-- Details Container -->
-    <div class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl">
+    <div
+      class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl"
+    >
       <h1 class="movie-title">{{ film.title }}</h1>
 
       <!-- Relative length/episodes -->
       <div class="flex space-x-2">
-        <h2 v-if="film.content === 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
-        <h2 v-if="film.content === 'Serie'" class="movie-genre text-sm">
+        <h2 v-if="film.content == 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
+        <h2 v-if="film.content == 'Serie'" class="movie-genre text-sm">
           {{ film.episodes }} episodes /
         </h2>
         <p class="text-sm">{{ timeAgo(film.created_at) }}</p>
-        <h2 class="movie-genre text-sm rounded-md">{{ film.genre }}</h2>
-      </div>
 
-      <div v-if="showOverlay"
-        class="play-overlay flex items-center justify-center absolute inset-0 bg-black bg-opacity-25">
-        <button v-if="showOverlay" class="text-white text-4xl">
-          <i class="fas fa-play-circle"></i>
-        </button>
+        <h2 class="movie-genre text-sm rounded-md">
+          {{ film.genre }}
+        </h2>
       </div>
     </div>
   </div>
@@ -73,6 +72,7 @@ export default {
 .film-card {
   position: relative;
   cursor: pointer;
+  max-height: 21rem;
 }
 
 .details-container {
@@ -120,4 +120,5 @@ export default {
 .film-card:hover .play-overlay {
   display: flex;
 }
+
 </style>
