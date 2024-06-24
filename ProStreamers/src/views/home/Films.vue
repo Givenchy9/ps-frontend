@@ -8,9 +8,9 @@
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
           placeholder="Search" v-model="search" />
       </div>
-      <div class="rounded-xl bg-gray-200">
-        <h2 class="text-center mt-2">Filter genre</h2>
-        <select v-model="selected" class="w-full rounded-full bg-gray-200">
+      <div class="rounded-xl ">
+        <h2 class="text-center mt-2 p-2">Filter genre</h2>
+        <select v-model="selected" class="w-full p-2 rounded-full bg-gray-200">
           <option>All</option>
           <option>Animation</option>
           <option>Action</option>
