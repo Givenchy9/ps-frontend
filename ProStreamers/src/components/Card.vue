@@ -1,5 +1,5 @@
 <template>
-  <div class="film-card col-span-1 w-56 rounded-sm relative">
+  <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
     <img :src="getPoster()" class="rounded-xl poster-image w-56" />
 
     <!-- Details Container -->
