@@ -59,22 +59,29 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="container">
-    <div v-if="loading" class="loading-screen">
-      <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
-    </div>
-    <div v-else class="film-details">
+<div v-if="loading" class="loading-screen">
+  <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+</div>
+  <div v-if="!loading" class="container mx-24">
+    
+    <div  class="film-details">
       <img :src="poster" class="poster-image w-92" />
       <div class="details">
         <template v-if="data">
           <p class="title text-4xl">{{ data.title }}</p>
-          <p class="description text-2xl">Description: {{ data.description }}</p>
+          <p class="description text-md text-nowrap">Description: {{ data.description }}</p>
           <div class="flex gap-2">
             <p class="genre">{{ data.genre }}</p>
           <p class="rating">Metascore: {{ rating }}/100</p>
 
           </div>
-          <button class="add-favorites">Add to favorites</button>
+          <div>
+          <button class="play button">Play</button>
+
+            <button class="add-favorites button">Add to favorites</button>
+          </div>
+          
+
           <Footer />
         </template>
       </div>
@@ -84,7 +91,9 @@ export default defineComponent({
 
 <style scoped>
 
-
+.description {
+  width: 2rem;
+}
 .loading-screen {
   display: flex;
   justify-content: center;
@@ -117,7 +126,18 @@ export default defineComponent({
 .add-favorites {
   background-color: black;
   color: white;
+  
+}
+
+.play {
+  background-color: rgb(46, 46, 46);
+  color: white;
+}
+
+.button {
+  
   padding: 10px;
+  margin: 2px;
   border-radius: 8px;
   width: 250px;
 }
