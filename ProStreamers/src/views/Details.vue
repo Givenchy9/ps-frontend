@@ -6,6 +6,9 @@ import Footer from '@/components/Footer.vue'
 
 
 export default defineComponent({
+  components: {
+    Footer,
+  },
   setup() {
     const route = useRoute()
     const filmId = ref(route.params.filmId)
@@ -59,29 +62,42 @@ export default defineComponent({
 </script>
 
 <template>
-<div v-if="loading" class="loading-screen">
-  <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
-</div>
-  <div v-if="!loading" class="container mx-24">
-    
-    <div  class="film-details">
-      <img :src="poster" class="poster-image w-92" />
-      <div class="details">
+  
+  <div  class="container flex m-auto w-full rounded-md">
+    <div class="film-details m-auto  flex">
+      <img :src="poster" class="poster-image w-82 mx-auto" />
+      <div v-if="loading" class="loading-screen">
+    <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+  </div>
+      <div v-if="!loading" class="details align-middle rounded-md m-2">
         <template v-if="data">
-          <p class="title text-4xl">{{ data.title }}</p>
-          <p class="description text-md text-nowrap">Description: {{ data.description }}</p>
-          <div class="flex gap-2">
-            <p class="genre">{{ data.genre }}</p>
-          <p class="rating">Metascore: {{ rating }}/100</p>
-
+          <div  class="flex flex-col justify-between h-full">
+            <div>
+            <p class="title text-5xl font-bold max-w-fit">{{ data.title }}</p>
+          <p class="description text-md w-1/2 text-xl mx-auto">{{ data.description }}</p>
+          <h2 v-if="data.content == 'Movie'" class="movie-genre text-sm">{{ data.length }} min</h2>
+        <h2 v-if="data.content == 'Serie'" class="movie-genre text-sm">
+          {{ data.episodes }} episodes
+        </h2>
+          <div class="flex gap-2 mt-4">
+            <div class="genre font-bold bg-black rounded-md px-2 text-white shadow-md">{{ data.genre }}</div>
+            <div class="rating bg-white px-2 rounded-md shadow-md">Metascore: {{ rating }}/100</div>
           </div>
-          <div>
-          <button class="play button">Play</button>
+          </div>
 
-            <button class="add-favorites button">Add to favorites</button>
+          
+          <div>
+            
+          <div class="mt-4">
+            <button class="play button mx-2">Play</button>
+            <button class="add-favorites button mx-2">
+            <i class="fa-solid fa-star fa-xl"></i>
+              Add to favorites</button>
+          </div>
+          </div>
           </div>
           
-
+          
           <Footer />
         </template>
       </div>
@@ -91,33 +107,6 @@ export default defineComponent({
 
 <style scoped>
 
-.description {
-  width: 2rem;
-}
-.loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.film-details {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px; /* Adjust as needed */
-}
-
-.poster-image {
-  height: auto;
-  border-radius: 8px;
-}
-
-.details {
-  display: flex;
-  top: 0;
-  flex-direction: column;
-}
 
 .title, .description, .genre, .rating {
   margin: 10px 0;
@@ -125,7 +114,7 @@ export default defineComponent({
 
 .add-favorites {
   background-color: black;
-  color: white;
+  color: rgb(255, 228, 27);
   
 }
 
