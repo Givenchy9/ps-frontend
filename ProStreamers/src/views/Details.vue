@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios'
 import { ref, onMounted, defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 
 
@@ -11,6 +11,8 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    
+    const router = useRouter()
     const filmId = ref(route.params.filmId)
     const loading = ref(false)
     const data = ref(null)
@@ -30,6 +32,7 @@ export default defineComponent({
         })
         .catch((error) => {
           console.error('Error fetching poster', error)
+
         })
     }
 
@@ -44,9 +47,7 @@ export default defineComponent({
         })
         .catch((error) => {
           console.error('Error fetching films', error)
-        })
-        .finally(() => {
-          // Any final cleanup or handling can go here
+          router.push('/films');
         })
     })
 

@@ -106,11 +106,13 @@ export default {
           this.loading = false
           this.$router.push('/films')
         } else {
+          this.loading = false
+
           this.error = 'Please try again'
         }
       } catch (e) {
         this.loading = false
-
+        console.log(response)
         this.error = 'An error occured: ' + e
       }
     }
