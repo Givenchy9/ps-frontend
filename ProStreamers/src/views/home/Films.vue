@@ -26,7 +26,6 @@
       </div>
     </div>
     <div class="film-content ml-1/4 w-3/4 p-4 fixed">
-      <p>Genre: {{ selected }}</p>
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
       </div>

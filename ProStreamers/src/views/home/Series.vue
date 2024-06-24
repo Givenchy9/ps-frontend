@@ -68,7 +68,7 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://chrisouboter.com/api/all/series'
+      const url = 'http://chrisouboter.com/api/all/serie'
 
       axios
         .get(url)
