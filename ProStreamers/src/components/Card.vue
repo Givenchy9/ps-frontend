@@ -1,10 +1,10 @@
 <template>
   <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
-    <img :src="getPoster()" class="rounded-xl poster-image w-56" />
+    <img :src="getPoster()" class="rounded-xl blur-bottom poster-image w-56" />
 
     <!-- Details Container -->
     <div
-      class="details-container absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-2 rounded-b-xl"
+      class="details-container duration-700 absolute bottom-0 w-full bg-black backdrop-blur-1 bg-opacity-50 text-white p-2 rounded-b-xl"
     >
       <h1 class="movie-title">{{ film.title }}</h1>
 
@@ -69,6 +69,10 @@ export default {
 </script>
 <!--  1bc03fd4 KEY VOOR OMDBAPI -->
 <style scoped>
+.blur-bottom {
+  background: inherit;
+  filter: blur(0px); /* Adjust the blur intensity as needed */
+}
 .film-card {
   position: relative;
   cursor: pointer;
@@ -76,7 +80,7 @@ export default {
 }
 
 .details-container {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
   padding: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
@@ -109,16 +113,14 @@ export default {
 }
 
 .film-card:hover .poster-image {
-  /* filter: blur(5px); */
+  filter: blur(1px);
   border: solid white 4px;
-}
-
-.film-card:hover .details-container {
-  background-color: rgba(0, 0, 0, 0);
 }
 
 .film-card:hover .play-overlay {
   display: flex;
 }
-
+.film-card:hover .details-container {
+  opacity: 0;
+}
 </style>
