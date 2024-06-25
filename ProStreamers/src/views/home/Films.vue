@@ -3,12 +3,16 @@
     <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
       <div class="relative w-full m-auto">
         <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
-        <input type="text"
+          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+        ></i>
+        <input
+          type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search" v-model="search" />
+          placeholder="Search"
+          v-model="search"
+        />
       </div>
-      <div class="rounded-xl ">
+      <div class="rounded-xl">
         <h2 class="text-center mt-2 p-2">Filter genre</h2>
         <select v-model="selected" class="w-full p-2 rounded-full bg-gray-200">
           <option>All</option>
@@ -20,9 +24,12 @@
       </div>
       <div class="mt-2">
         <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
-        <label for="choose-me"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
-          Alphabetical </label>
+        <label
+          for="choose-me"
+          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
+        >
+          Alphabetical
+        </label>
       </div>
     </div>
     <div class="film-content ml-1/4 w-3/4 p-4 fixed">
@@ -44,9 +51,9 @@ import FilmCard from '@/components/Card.vue'
 import Footer from '@/components/Footer.vue'
 
 interface Film {
-  id: number;
-  title: string;
-  genre: string;
+  id: number
+  title: string
+  genre: string
 }
 
 export default defineComponent({

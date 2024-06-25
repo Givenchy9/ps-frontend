@@ -40,15 +40,16 @@ const routes = [
         name: 'details',
         component: Details,
         props: true
+      },
+      {
+        path: '/favorites',
+        name: 'favorites',
+        component: () => import('../views/Favorites.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   },
-  {
-    path: '/favorites',
-    name: 'favorites',
-    component: () => import('../views/Favorites.vue'),
-    meta: { requiresAuth: true }
-  },
+
   {
     path: '/search',
     name: 'search',
@@ -76,7 +77,7 @@ const routes = [
       {
         path: '/endpoint',
         name: 'endpoint',
-        component: () => import('../views/settings/Endpoint.vue'),
+        component: () => import('../views/settings/Endpoint.vue')
       }
     ]
   },
