@@ -71,7 +71,7 @@ export default {
 <style scoped>
 .blur-bottom {
   background: inherit;
-  filter: blur(0px); /* Adjust the blur intensity as needed */
+  filter: blur(0px);
 }
 .film-card {
   position: relative;
@@ -113,7 +113,7 @@ export default {
 }
 
 .film-card:hover .poster-image {
-  filter: blur(1px);
+  filter: blur(0.25px);
   border: solid white 4px;
 }
 

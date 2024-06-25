@@ -14,7 +14,7 @@
         />
       </div>
       <div class="rounded-xl">
-        <h2 class="text-center mt-2 p-2">Filter genre</h2>
+        <h2 class="text-white text-center mt-2 p-2">Filter genre</h2>
         <select v-model="selected" class="w-full p-2 rounded-full bg-gray-200">
           <option>All</option>
           <option>Animation</option>
@@ -35,7 +35,7 @@
     </div>
     <div class="film-content ml-1/4 w-3/4 p-4 fixed">
       <div v-if="loading" class="p-4 loading-screen">
-        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
       <h1 class="text-3xl font-bold py-4">Your favorites</h1>
       <p v-if="!loading && data.length === 0">No favorites found</p>

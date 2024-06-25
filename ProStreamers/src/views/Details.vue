@@ -121,22 +121,24 @@ export default defineComponent({
     <div class="film-details m-auto flex">
       <img v-if="!loading" :src="poster" class="poster-image w-82 mx-auto" />
       <div v-if="loading" class="loading-screen">
-        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
       <div v-if="!loading" class="details align-middle rounded-md m-2">
         <template v-if="data">
           <div class="flex flex-col justify-between h-full">
             <div>
-              <p class="title text-5xl font-bold max-w-fit">{{ data.title }}</p>
-              <p class="description text-md w-1/2 text-xl mx-auto">{{ data.description }}</p>
-              <h2 v-if="data.content == 'Movie'" class="movie-genre text-sm">
+              <p class="title text-5xl font-bold max-w-fit text-white">{{ data.title }}</p>
+              <p class="description text-md w-1/2 text-xl mx-auto text-white">
+                {{ data.description }}
+              </p>
+              <h2 v-if="data.content == 'Movie'" class="movie-genre text-sm text-white">
                 {{ data.length }} min
               </h2>
-              <h2 v-if="data.content == 'Serie'" class="movie-genre text-sm">
+              <h2 v-if="data.content == 'Serie'" class="movie-genre text-sm text-white">
                 {{ data.episodes }} episodes
               </h2>
               <div class="flex gap-2 mt-4">
-                <div class="genre font-bold bg-black rounded-md px-2 text-white shadow-md">
+                <div class="genre font-bold bg-gray-600 rounded-md px-2 text-white shadow-md">
                   {{ data.genre }}
                 </div>
                 <div class="rating bg-white px-2 rounded-md shadow-md">
@@ -147,7 +149,7 @@ export default defineComponent({
 
             <div>
               <div class="mt-4">
-                <button class="play button mx-2">Play</button>
+                <button class="play button mx-2 text-white">Play</button>
                 <button
                   v-if="favorited"
                   class="bg-white button mx-2 text-black"
@@ -155,7 +157,11 @@ export default defineComponent({
                 >
                   Remove from favorites
                 </button>
-                <button v-else class="add-favorites button mx-2" @click="toggleFavorite(data.id)">
+                <button
+                  v-else
+                  class="add-favorites bg-white button mx-2"
+                  @click="toggleFavorite(data.id)"
+                >
                   <i class="fa-solid fa-star fa-xl"></i>Add to favorites
                 </button>
               </div>
@@ -178,13 +184,11 @@ export default defineComponent({
 }
 
 .add-favorites {
-  background-color: black;
-  color: rgb(255, 228, 27);
+  color: black;
 }
 
 .play {
   background-color: rgb(46, 46, 46);
-  color: white;
 }
 
 .button {
