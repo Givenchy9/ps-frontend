@@ -1,43 +1,46 @@
 <template>
   <div class="Films flex">
     <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
-      <div class="relative w-full m-auto">
-        <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
-        <input type="text"
-          class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search" v-model="search" />
+      <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
+        <div class="relative w-full m-auto">
+          <i
+            class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
+          <input type="text"
+            class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+            placeholder="Search" v-model="search" />
+        </div>
+        <div class="rounded-xl bg-gray-200">
+          <h2 class="text-center mt-2">Filter genre</h2>
+          <select v-model="selected" class="w-full rounded-full bg-gray-200">
+            <option>All</option>
+            <option>Animation</option>
+            <option>Action</option>
+            <option>Adventure</option>
+            <option>Horror</option>
+          </select>
+        </div>
+        <div class="mt-2">
+          <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
+          <label for="choose-me"
+            class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
+            Alphabetical </label>
+        </div>
       </div>
-      <div class="rounded-xl bg-gray-200">
-        <h2 class="text-center mt-2">Filter genre</h2>
-        <select v-model="selected" class="w-full rounded-full bg-gray-200">
-          <option>All</option>
-          <option>Animation</option>
-          <option>Action</option>
-          <option>Adventure</option>
-          <option>Horror</option>
-        </select>
-      </div>
-      <div class="mt-2">
-        <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
-        <label for="choose-me"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200 ">
-          Alphabetical </label>
+      <div class="film-content ml-1/4 w-3/4 p-4 fixed">
+        <div v-if="loading" class="p-4 loading-screen">
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
+        </div>
+        <div class="film-cards h-full overflow-auto">
+          <FilmCard v-for="d in data" :key="d.id" :film="d" />
+        </div>
       </div>
     </div>
-    <div class="film-content ml-1/4 w-3/4 p-4 fixed">
-      <div v-if="loading" class="p-4 loading-screen">
-        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl"></i>
-      </div>
-      <div class="film-cards h-full overflow-auto">
-        <FilmCard v-for="d in data" :key="d.id" :film="d" />
-      </div>
-    </div>
-  </div>
-  <Footer />
+    <Footer />
 </template>
 
 <script lang="ts">
+import { ref, onMounted, watch, defineComponent } from 'vue'
+<script lang="ts" >
 import { ref, onMounted, watch, defineComponent } from 'vue'
 import axios from 'axios'
 import FilmCard from '@/components/Card.vue'
@@ -67,61 +70,112 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://chrisouboter.com/api/latest'
+      setup() {
+        const data = ref<Film[]>([])
+        const loading = ref(false)
+        const selected = ref('All')
+        const search = ref('')
+        const alfa = ref(false)
 
-      axios
-        .get(url)
-        .then((response) => {
-          let films = response.data.data
-          if (selected.value !== 'All') {
-            films = films.filter((film: Film) => {
-              return film.genre.toLowerCase().includes(selected.value.toLowerCase())
-            })
-          }
+        const fetchFilms = () => {
+          filter()
+        }
+
+        const filter = () => {
+          loading.value = true
+          const url = 'http://chrisouboter.com/api/latest'
+
+          axios
+            .get(url)
+            .then((response) => {
+              let films = response.data.data
+              if (selected.value !== 'All') {
+                films = films.filter((film: Film) => {
+                  return film.genre.toLowerCase().includes(selected.value.toLowerCase())
+                  let films = response.data.data
+                  if (selected.value !== 'All') {
+                    films = films.filter((film: Film) => {
+                      return film.genre.toLowerCase().includes(selected.value.toLowerCase())
+                    })
+                  }
+
+                  if (alfa.value) {
+                    films = films.sort((a: Film, b: Film) => {
+                      return a.title.localeCompare(b.title)
+                    })
+                  }
+
+                  data.value = films
+                }
 
           if (alfa.value) {
-            films = films.sort((a: Film, b: Film) => {
-              return a.title.localeCompare(b.title)
+                  films = films.sort((a: Film, b: Film) => {
+                    return a.title.localeCompare(b.title)
+                  })
+                }
+
+                data.value = films
+              })
+            .catch((error) => {
+              console.error('Error fetching latest', error)
             })
+            .finally(() => {
+              loading.value = false
+              loading.value = false
+            })
+        }
+
+        const searchData = (newSearch: string) => {
+          if (newSearch.length === 0) {
+            fetchFilms()
           }
 
-          data.value = films
-        })
-        .catch((error) => {
-          console.error('Error fetching latest', error)
-        })
-        .finally(() => {
-          loading.value = false
-        })
+          const searchData = (newSearch: string) => {
+            if (newSearch.length === 0) {
+              fetchFilms()
+            } else {
+              data.value = data.value.filter((film: Film) => {
+                data.value = data.value.filter((film: Film) => {
+                  return film.title.toLowerCase().includes(newSearch.toLowerCase())
+                })
+              }
     }
 
-    const searchData = (newSearch: string) => {
-      if (newSearch.length === 0) {
-        fetchFilms()
-      } else {
-        data.value = data.value.filter((film: Film) => {
-          return film.title.toLowerCase().includes(newSearch.toLowerCase())
+            onMounted(fetchFilms)
+
+            watch(selected, filter)
+            watch(search, searchData)
+            watch(alfa, filter)
+
+            return {
+              data,
+              loading,
+              selected,
+              search,
+              alfa,
+              fetchFilms,
+              filter,
+              searchData
+            }
+
+            onMounted(fetchFilms)
+
+            watch(selected, filter)
+            watch(search, searchData)
+            watch(alfa, filter)
+
+            return {
+              data,
+              loading,
+              selected,
+              search,
+              alfa,
+              fetchFilms,
+              filter,
+              searchData
+            }
+          }
         })
-      }
-    }
-
-    onMounted(fetchFilms)
-
-    watch(selected, filter)
-    watch(search, searchData)
-    watch(alfa, filter)
-
-    return {
-      data,
-      loading,
-      selected,
-      search,
-      alfa,
-      fetchFilms,
-      filter,
-      searchData
-    }
-  }
 })
 </script>
 

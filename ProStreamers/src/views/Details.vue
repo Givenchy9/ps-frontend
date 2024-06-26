@@ -1,27 +1,85 @@
 <script>
 import axios from 'axios'
 import { ref, onMounted, defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 
-
 export default defineComponent({
+  components: {
+    Footer
+  },
   setup() {
     const route = useRoute()
+
+    const router = useRouter()
     const filmId = ref(route.params.filmId)
     const loading = ref(false)
     const data = ref(null)
     const poster = ref(null)
+    const rating = ref(null)
+    const favorited = ref(null)
+
+    function toggleFavorite(filmData) {
+      console.log('toggle favorite' + filmId.value)
+      // Implement the actual logic to toggle the favorite status here
+      let token = localStorage.getItem('token')
+
+      let url = 'http://chrisouboter.com/api/user/toggle'
+
+      axios
+        .post(
+          url,
+          {
+            content_id: filmId.value
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+        .then((response) => {
+          console.log(response.data)
+          checkFavorite()
+        })
+        .catch()
+    }
+
+    const checkFavorite = (filmData) => {
+      loading.value = true
+
+      let token = localStorage.getItem('token')
+      let url = 'http://chrisouboter.com/api/user/check'
+      axios
+        .post(
+          url,
+          {
+            content_id: filmId.value
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+        .then((response) => {
+          favorited.value = response.data.data
+          console.log(favorited.value)
+          loading.value = false
+        })
+        .catch()
+    }
 
     const getPoster = (filmData) => {
-      let url2 = 'http://www.omdbapi.com/?t=' + filmData.title + '&apikey=1bc03fd4';
+      let url2 = 'http://www.omdbapi.com/?t=' + filmData.title + '&apikey=1bc03fd4'
       axios
         .get(url2)
         .then((response) => {
           poster.value = response.data.Poster
-          loading.value = false
-          console.log(response.data);
-          console.log(response.data.Poster);
+          rating.value = response.data.Metascore
+
+          console.log(response.data)
+          console.log(response.data.Poster)
         })
         .catch((error) => {
           console.error('Error fetching poster', error)
@@ -34,14 +92,14 @@ export default defineComponent({
       axios
         .get(url)
         .then((response) => {
-          data.value = response.data.data  // Assuming response.data contains the actual film data
-          getPoster(response.data.data);  // Call getPoster to fetch the poster
+          data.value = response.data.data
+          getPoster(response.data.data)
+          checkFavorite(response.data.data)
+          loading.value = false
         })
         .catch((error) => {
           console.error('Error fetching films', error)
-        })
-        .finally(() => {
-          // Any final cleanup or handling can go here
+          router.push('/films')
         })
     })
 
@@ -49,7 +107,10 @@ export default defineComponent({
       filmId,
       loading,
       data,
-      poster
+      poster,
+      rating,
+      favorited,
+      toggleFavorite
     }
   }
 })
@@ -91,9 +152,6 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-
-
 
 <style scoped>
 .poster-image {
