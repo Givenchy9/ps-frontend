@@ -1,20 +1,23 @@
 <template>
   <div class="mt-10">
     <div class="grid grid-col-2 w-full m-auto">
-      <input
-        type="text"
-        ref="searchInput"
-        class="block w-96 m-auto rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-        placeholder="Search for movies and series"
-        v-model="search"
-      />
+      <div class="relative w-96 m-auto">
+        <input
+          type="text"
+          ref="searchInput"
+          class="block w-full p-4 ps-10 text-md placeholder-gray-200 text-white border border-gray-300 rounded-lg bg-white/20 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search in our database..."
+          v-model="search"
+        />
+        <i class="fa fa-search absolute top-1/2 left-3 transform -translate-y-1/2 text-white"></i>
+      </div>
     </div>
     <div class="film h-full overflow-auto mx-10 mt-10">
       <div class="film-content p-4 fixed overflow-auto">
         <div v-if="loading" class="p-4 loading-screen">
           <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
         </div>
-        <div class="film-cards h-full overflow-auto">
+        <div class="film-cards h-full overflow-auto w-11/12">
           <FilmCard
             v-if="search && filteredFilms.length > 0"
             v-for="d in filteredFilms"

@@ -42,6 +42,12 @@ const routes = [
         props: true
       },
       {
+        path: '/search',
+        name: 'search',
+        component: () => import('../views/Search.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
         path: '/favorites',
         name: 'favorites',
         component: () => import('../views/Favorites.vue'),
@@ -50,12 +56,6 @@ const routes = [
     ]
   },
 
-  {
-    path: '/search',
-    name: 'search',
-    component: () => import('../views/Search.vue'),
-    meta: { requiresAuth: true }
-  },
   {
     path: '/login',
     name: 'login',
