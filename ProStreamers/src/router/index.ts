@@ -71,7 +71,7 @@ const routes = [
       {
         path: '/user',
         name: 'user',
-        component: () => import('../views/settings/Account.vue'),
+        component: () => import('../views/settings/Account.vue')
       },
       {
         path: '/endpoint',
@@ -82,7 +82,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/' // Redirect any unknown paths to the home
+    redirect: '/film' // Redirect any unknown paths to the home
   }
 ]
 
@@ -92,9 +92,10 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
+  const user = localStorage.getItem('user')
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!token) {
+    if (!token || !user) {
       next({
         path: 'login'
       })

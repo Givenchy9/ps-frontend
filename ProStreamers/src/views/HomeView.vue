@@ -30,7 +30,6 @@
       <button @click="logOut" class="bg-white/10 rounded-md px-4 py-2 flex">
         <i class="fa-solid fa-user px-2 fa-md fa-white"></i>
         <p class="mx-2 font-bold">Log out</p>
-        <p>{{ username }}</p>
       </button>
     </div>
   </header>
