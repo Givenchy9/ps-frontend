@@ -56,26 +56,37 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex">
-    <div class="Films flex">
+  <div class="h-20">
+    <RouterLink to="/film">
+      <i class="fa-solid fa-circle-left fa-xl float-right"></i>
+    </RouterLink>
+    <div class="grid grid-cols-3 gap-8">
       <div v-if="loading" class="loading-screen">Loading...</div>
-      <div v-else class="film-content">
+      <div v-else class="col-span-1">
         <img :src="poster" class="rounded-xl poster-image" />
-        <h1>Details for Film ID: {{ filmId }}</h1>
-        <template v-if="data">
-          <p class="text-4xl">Title: {{ data.title }}</p>
-          <p class="text-2xl">Description: {{ data.description }}</p>
-          <p>Genre: {{ data.genre }}</p>
+      </div>
+      <div class="grid grid-rows-2 col-span-2">
+        <div>
+          <h1>Details for Film ID: {{ filmId }}</h1>
+          <template v-if="data">
+            <p class="text-4xl font-bold">Title: {{ data.title }}</p>
+            <p class="text-2xl">Description: {{ data.description }}</p>
+            <p>Genre: {{ data.genre }}</p>
 
 
+
+
+            <Footer />
+
+          </template>
+
+          <template v-else>
+            <p>No data available</p>
+          </template>
+        </div>
+        <div>
           <button class="bg-black text-white p-2 rounded-xl">Add to favorites</button>
-          <Footer />
-
-        </template>
-        
-        <template v-else>
-          <p>No data available</p>
-        </template>
+        </div>
       </div>
     </div>
   </div>
@@ -85,5 +96,7 @@ export default defineComponent({
 
 
 <style scoped>
-/* Add scoped styles here if needed */
+.poster-image {
+  height: 600px;
+}
 </style>

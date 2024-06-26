@@ -69,9 +69,8 @@ const routes = [
     children: [
       {
         path: '/user',
-        name: 'user'
-        // Uncomment and use the correct component when needed
-        // component: User,
+        name: 'user',
+        component: () => import('../views/settings/Account.vue'),
       },
       {
         path: '/endpoint',

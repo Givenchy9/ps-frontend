@@ -9,7 +9,7 @@
       <div class="flex space-x-2">
         <h2 v-if="film.content === 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
         <h2 v-if="film.content === 'Serie'" class="movie-genre text-sm">
-          {{ film.episodes }} episodes /
+          {{ film.episodes }} Eps /
         </h2>
         <p class="text-sm">{{ timeAgo(film.created_at) }}</p>
         <h2 class="movie-genre text-sm rounded-md">{{ film.genre }}</h2>
