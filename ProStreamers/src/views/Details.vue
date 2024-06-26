@@ -117,44 +117,84 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="h-20">
-    <RouterLink to="/film">
-      <i class="fa-solid fa-circle-left fa-xl float-right"></i>
-    </RouterLink>
-    <div class="grid grid-cols-3 gap-8">
-      <div v-if="loading" class="loading-screen">Loading...</div>
-      <div v-else class="col-span-1">
-        <img :src="poster" class="rounded-xl poster-image" />
+  <div class="container flex m-auto w-full rounded-md">
+    <div class="film-details m-auto flex">
+      <img v-if="!loading" :src="poster" class="poster-image w-82 mx-auto" />
+      <div v-if="loading" class="loading-screen">
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
-      <div class="grid grid-rows-2 col-span-2">
-        <div>
-          <h1>Details for Film ID: {{ filmId }}</h1>
-          <template v-if="data">
-            <p class="text-4xl font-bold">Title: {{ data.title }}</p>
-            <p class="text-2xl">Description: {{ data.description }}</p>
-            <p>Genre: {{ data.genre }}</p>
+      <div v-if="!loading" class="details align-middle rounded-md m-2">
+        <template v-if="data">
+          <div class="flex flex-col justify-between h-full">
+            <div>
+              <p class="title text-5xl font-bold max-w-fit text-white">{{ data.title }}</p>
+              <p class="description text-md w-1/2 text-xl mx-auto text-white">
+                {{ data.description }}
+              </p>
+              <h2 v-if="data.content == 'Movie'" class="movie-genre text-sm text-white">
+                {{ data.length }} min
+              </h2>
+              <h2 v-if="data.content == 'Serie'" class="movie-genre text-sm text-white">
+                {{ data.episodes }} episodes
+              </h2>
+              <div class="flex gap-2 mt-4">
+                <div class="genre font-bold bg-gray-600 rounded-md px-2 text-white shadow-md">
+                  {{ data.genre }}
+                </div>
+                <div class="rating bg-white px-2 rounded-md shadow-md">
+                  Metascore: {{ rating }}/100
+                </div>
+              </div>
+            </div>
 
+            <div>
+              <div class="mt-4">
+                <button class="play button mx-2 text-white">Play</button>
+                <button
+                  v-if="favorited"
+                  class="bg-white button mx-2 text-black"
+                  @click="toggleFavorite(data.id)"
+                >
+                  Remove from favorites
+                </button>
+                <button
+                  v-else
+                  class="add-favorites bg-white button mx-2"
+                  @click="toggleFavorite(data.id)"
+                >
+                  <i class="fa-solid fa-star fa-xl"></i>Add to favorites
+                </button>
+              </div>
+            </div>
+          </div>
 
-
-
-            <Footer />
-
-          </template>
-
-          <template v-else>
-            <p>No data available</p>
-          </template>
-        </div>
-        <div>
-          <button class="bg-black text-white p-2 rounded-xl">Add to favorites</button>
-        </div>
+          <Footer />
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.poster-image {
-  height: 600px;
+.title,
+.description,
+.genre,
+.rating {
+  margin: 10px 0;
+}
+
+.add-favorites {
+  color: black;
+}
+
+.play {
+  background-color: rgb(46, 46, 46);
+}
+
+.button {
+  padding: 10px;
+  margin: 2px;
+  border-radius: 8px;
+  width: 250px;
 }
 </style>
