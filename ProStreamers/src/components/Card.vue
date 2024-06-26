@@ -6,13 +6,14 @@
     <div
       class="details-container duration-700 absolute bottom-0 w-full bg-black backdrop-blur-1 bg-opacity-50 text-white p-2 rounded-b-xl">
       <h1 class="movie-title">{{ film.title }}</h1>
-
+      <i class="fa-solid fa-play fa-md play-icon hidden"></i>
       <!-- Relative length/episodes -->
       <div class="flex space-x-2">
         <h2 v-if="film.content === 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
         <h2 v-if="film.content === 'Serie'" class="movie-genre text-sm">
           {{ film.episodes }} Eps /
         </h2>
+        
         <p class="text-sm">{{ timeAgo(film.created_at) }}</p>
 
         <h2 class="movie-genre text-sm rounded-md">
@@ -123,5 +124,12 @@ export default {
 
 .film-card:hover .details-container {
   opacity: 0;
+}
+
+.film-card:hover .play-icon {
+  opacity: 100;
+}
+.film-card:hover .play-icon {
+  opacity: 100;
 }
 </style>
