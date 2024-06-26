@@ -37,7 +37,7 @@
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
-      <h1 class="text-3xl font-bold py-4">Your favorites</h1>
+      <h1 class="text-3xl font-bold py-4 text-white">Your favorites</h1>
       <p v-if="!loading && data.length === 0">No favorites found</p>
       <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
