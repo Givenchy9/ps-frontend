@@ -152,7 +152,7 @@ export default defineComponent({
                 <button class="play button mx-2 text-white"><i class="fa-solid fa-play fa-md"></i> Play </button>
                 <button
                   v-if="favorited"
-                  class="bg-white button mx-2 text-black"
+                  class="bg-red-200 button mx-2 text-black"
                   @click="toggleFavorite(data.id)"
                 >
                 <i class="fa-solid fa-trash fa-md"></i>
@@ -160,7 +160,7 @@ export default defineComponent({
                 </button>
                 <button
                   v-else
-                  class="add-favorites bg-white button mx-2"
+                  class="add-favorites bg-green-200 button mx-2"
                   @click="toggleFavorite(data.id)"
                 >
                   <i class="fa-solid fa-star fa-md"></i>Add to favorites
