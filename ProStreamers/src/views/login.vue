@@ -102,6 +102,7 @@ export default {
           console.log(data.user)
           localStorage.setItem('token', data.token)
           localStorage.setItem('user', JSON.stringify(data.user))
+          localStorage.setItem('tokenTime', new Date().toISOString())
           this.error = ''
           this.loading = false
           this.$router.push('/films')

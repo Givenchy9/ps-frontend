@@ -93,9 +93,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const user = localStorage.getItem('user')
+  const time = localStorage.getItem('tokenTime')
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!token || !user) {
+    const loginDate = new Date(time)
+    const now = new Date()
+    const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
+    if (!token || !user || differenceInHours > 0.5 || !time) {
+      localStorage.clear()
       next({
         path: 'login'
       })
