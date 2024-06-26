@@ -106,7 +106,7 @@ export default {
 }
 
 .text-sm {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 .play-overlay {
