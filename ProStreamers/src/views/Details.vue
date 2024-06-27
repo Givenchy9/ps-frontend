@@ -117,9 +117,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="container flex m-auto w-full rounded-md">
+  <div class="container flex w-full rounded-md">
     <div class="film-details m-auto flex">
-      <img v-if="!loading" :src="poster" class="poster-image w-82 mx-auto" />
+      <img v-if="!loading" :src="poster" class="poster-image w-1/3 mx-auto" />
       <div v-if="loading" class="loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
@@ -127,7 +127,7 @@ export default defineComponent({
         <template v-if="data">
           <div class="flex flex-col justify-between h-full">
             <div>
-              <p class="title text-5xl font-bold max-w-fit text-white">{{ data.title }}</p>
+              <p class="title text-6xl font-bold max-w-fit text-white">{{ data.title }}</p>
               <p class="description text-md w-1/2 text-xl mx-auto text-white">
                 {{ data.description }}
               </p>
@@ -149,13 +149,15 @@ export default defineComponent({
 
             <div>
               <div class="mt-4">
-                <button class="play button mx-2 text-white"><i class="fa-solid fa-play fa-md"></i> Play </button>
+                <button class="play button mx-2 text-white">
+                  <i class="fa-solid fa-play fa-md"></i> Play
+                </button>
                 <button
                   v-if="favorited"
                   class="bg-red-200 button mx-2 text-black"
                   @click="toggleFavorite(data.id)"
                 >
-                <i class="fa-solid fa-trash fa-md"></i>
+                  <i class="fa-solid fa-trash fa-md"></i>
                   Remove from favorites
                 </button>
                 <button
