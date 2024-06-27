@@ -20,6 +20,8 @@
           <option>Action</option>
           <option>Adventure</option>
           <option>Horror</option>
+          <option>Drama</option>
+          <option>Romance</option>
         </select>
       </div>
       <div class="mt-2">

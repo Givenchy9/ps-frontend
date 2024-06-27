@@ -2,13 +2,16 @@
   <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
     <img :src="getPoster()" class="rounded-xl blur-bottom poster-image w-56" />
 
-    <!-- Details Container -->
+    <div
+      class="play-overlay absolute inset-0 flex items-center justify-center text-white text-2xl font-bold"
+    >
+      <i class="fa-solid fa-play flex items-center pointer-events-none fa-xl"></i>
+    </div>
     <div
       class="details-container duration-700 absolute bottom-0 w-full bg-black backdrop-blur-1 bg-opacity-50 text-white p-2 rounded-b-xl"
     >
       <h1 class="movie-title">{{ film.title }}</h1>
       <i class="fa-solid fa-play fa-md play-icon hidden"></i>
-      <!-- Relative length/episodes -->
       <div class="flex space-x-2">
         <h2 v-if="film.content === 'Movie'" class="movie-genre text-sm">{{ film.length }} min /</h2>
         <h2 v-if="film.content === 'Serie'" class="movie-genre text-sm">
@@ -111,6 +114,7 @@ export default {
 
 .play-overlay {
   display: none;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
 }
 
 .film-card:hover .poster-image {
@@ -126,9 +130,6 @@ export default {
   opacity: 0;
 }
 
-.film-card:hover .play-icon {
-  opacity: 100;
-}
 .film-card:hover .play-icon {
   opacity: 100;
 }
