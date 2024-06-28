@@ -95,35 +95,52 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
 router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('token')
+  const user = localStorage.getItem('user')
+  const time = localStorage.getItem('tokenTime')
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const token = localStorage.getItem('token')
-    const time = localStorage.getItem('tokenTime')
-
-    if (!token || !time) {
-      next('/login')
-      return
+    if (!token || !user || !time) {
+      localStorage.clear()
+      return next({ path: '/login' })
     }
 
-    try {
-      const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
-        headers: {
-          Authorization: `Bearer ${token}`
+    const loginDate = new Date(time)
+    const now = new Date()
+    const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
+    console.log('Calculated ' + differenceInHours)
+
+    if (differenceInHours > 0.25) {
+      console.log('Getting..')
+
+      try {
+        const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        if (response.data.success) {
+          console.log('API key still available')
+          localStorage.setItem('tokenTime', new Date().toISOString())
+          return next()
+        } else {
+          console.log('API key not valid, clearing session')
+          localStorage.clear()
+          return next('/login')
         }
-      })
-
-      if (response.data.success) {
-        next()
-      } else {
+      } catch (error) {
+        console.error('Error checking authentication:', error)
         localStorage.clear()
-        next('/login')
+        return next('/login')
       }
-    } catch (error) {
-      console.error('Error checking authentication:', error)
-      next('/login')
     }
+
+    return next()
   } else {
-    next()
+    return next()
   }
 })
 

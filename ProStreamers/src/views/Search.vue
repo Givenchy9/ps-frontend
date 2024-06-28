@@ -5,7 +5,7 @@
         <input
           type="text"
           ref="searchInput"
-          class="block w-full p-4 ps-10 text-md dark:focus:text-white placeholder-gray-700 text-gray-700 border border-gray-300 rounded-lg bg-white/20 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="block w-full p-4 ps-10 text-md dark:text-white placeholder-gray-700 text-gray-700 border border-gray-300 rounded-lg bg-white/20 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search in our database..."
           v-model="search"
         />
