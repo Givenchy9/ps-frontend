@@ -52,6 +52,24 @@ const routes = [
         name: 'favorites',
         component: () => import('../views/Favorites.vue'),
         meta: { requiresAuth: true }
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: () => import('../views/Settings.vue'),
+        meta: { requiresAuth: true },
+        children: [
+          {
+            path: '/user',
+            name: 'user',
+            component: () => import('../views/settings/Account.vue')
+          },
+          {
+            path: '/endpoint',
+            name: 'endpoint',
+            component: () => import('../views/settings/Endpoint.vue')
+          }
+        ]
       }
     ]
   },
@@ -68,24 +86,7 @@ const routes = [
     component: () => import('../views/register.vue'),
     meta: { hideFooter: true }
   },
-  {
-    path: '/settings',
-    name: 'settings',
-    component: () => import('../views/Settings.vue'),
-    meta: { requiresAuth: true },
-    children: [
-      {
-        path: '/user',
-        name: 'user',
-        component: () => import('../views/settings/Account.vue')
-      },
-      {
-        path: '/endpoint',
-        name: 'endpoint',
-        component: () => import('../views/settings/Endpoint.vue')
-      }
-    ]
-  },
+
   {
     path: '/:pathMatch(.*)*',
     redirect: '/film' // Redirect any unknown paths to the home

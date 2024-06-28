@@ -27,9 +27,12 @@
     <div
       class="flex text-white flex-row gap-2 rounded-md ring-gray-200 hover:bg-black/20 duration-700"
     >
-      <button @click="logOut" class="bg-white/10 rounded-md px-4 py-2 flex">
-        <i class="fa-solid fa-user px-2 fa-md fa-white"></i>
-        <p class="mx-2 font-bold">Log out</p>
+      <button
+        @click="logOut"
+        class="bg-white/5 rounded-md px-4 py-2 flex justify-center items-center"
+      >
+        <i class="fa-solid fa-user px-2 fa-md fa-white align-middle"></i>
+        <p class="mx-2 font-bold align-middle">Log out</p>
       </button>
     </div>
   </header>
