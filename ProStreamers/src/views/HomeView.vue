@@ -4,7 +4,7 @@
   >
     <div class="font-bold text-2xl text-white">ProStreamers</div>
 
-    <div>
+    <div class="align-middle flex-row flex">
       <RouterLink
         class="isolate text-white w-1/3 py-2 px-4 gap-2 rounded-md mx-2 bg-white/10 shadow-xl ring-2 ring-gray-200 hover:bg-gray-200 hover:text-gray-600 duration-200"
         to="/films"
