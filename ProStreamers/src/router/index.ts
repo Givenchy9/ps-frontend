@@ -4,7 +4,7 @@ import Films from '../views/home/Films.vue'
 
 import Series from '../views/home/Series.vue'
 import Details from '../views/Details.vue'
-
+import axios from 'axios'
 import Latest from '../views/home/Latest.vue'
 // import User from '../views/settings/User.vue';
 import Endpoint from '../views/settings/Endpoint.vue'
@@ -97,22 +97,32 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
-  const user = localStorage.getItem('user')
-  const time = localStorage.getItem('tokenTime')
-
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const loginDate = new Date(time)
-    const now = new Date()
-    const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
-    if (!token || !user || differenceInHours > 0.5 || !time) {
-      localStorage.clear()
-      next({
-        path: 'login'
+    const token = localStorage.getItem('token')
+    const time = localStorage.getItem('tokenTime')
+
+    if (!token || !time) {
+      next('/login')
+      return
+    }
+
+    try {
+      const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
-    } else {
-      next()
+
+      if (response.data.success) {
+        next()
+      } else {
+        localStorage.clear()
+        next('/login')
+      }
+    } catch (error) {
+      console.error('Error checking authentication:', error)
+      next('/login')
     }
   } else {
     next()

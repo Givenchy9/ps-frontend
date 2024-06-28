@@ -6,8 +6,15 @@
           Edit account information
         </h2>
       </div>
-      <form class="space-y-6" @submit.prevent="handleSubmit">
+      <div v-if="loading" class="loading-screen flex justify-center py-12">
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white fa-xl"></i>
+      </div>
+      <form v-if="!loading" class="space-y-6" @submit.prevent="handleSubmit">
         <p class="mt-10 bg-red-400 rounded-sm text-center text-lg text-white">{{ error }}</p>
+        <p class="mt-10 bg-green-400 rounded-sm text-center text-lg text-white">
+          {{ success_message }}
+        </p>
+
         <div>
           <label for="name" class="block text-sm font-medium leading-6 text-white">Name</label>
           <div class="mt-2">
@@ -41,15 +48,25 @@
         <div>
           <button
             type="submit"
-            class="flex shadow-xl w-full justify-center rounded-md bg-violet-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex shadow-xl w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-xl hover:text-white hover:bg-black/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            <div v-if="!loading" class="text-white">Change details</div>
+            <div v-if="!loading" class="">Save</div>
             <div v-if="loading" class="loading-screen">
               <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
             </div>
           </button>
         </div>
       </form>
+      <button
+        @click="confirmDeleteAccount"
+        v-if="!loading"
+        class="my-4 flex shadow-xl w-full justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        <div v-if="!loading" class="text-white">Delete account</div>
+        <div v-if="loading" class="loading-screen">
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
+        </div>
+      </button>
     </div>
   </div>
 </template>
@@ -62,7 +79,8 @@ export default {
     const email = ref('')
     const name = ref('')
     const error = ref(null)
-    const loading = ref(false)
+    const loading = ref(true)
+    const success_message = ref(null)
 
     const fetch = () => {
       const token = localStorage.getItem('token')
@@ -77,33 +95,67 @@ export default {
           const user = response.data.user
           email.value = user.email
           name.value = user.name
+          loading.value = false
         })
         .catch((err) => {
           error.value = 'Failed to fetch user data: ' + err
         })
     }
+    const confirmDeleteAccount = () => {
+      if (confirm('Are you sure you want to delete your account? This action cant be reversed!!')) {
+        delete_account()
+      }
+    }
+    const delete_account = async () => {
+      loading.value = true
+      const token = localStorage.getItem('token')
+      try {
+        const response = await axios
+          .post(
+            'https://www.chrisouboter.com/api/user/delete',
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            }
+          )
+          .then((r) => {
+            console.log('deleted account')
+          })
+      } catch (e) {
+        loading.value = false
+        error.value = 'An error occurred: ' + e
+        console.log(e)
+      }
+    }
 
     const handleSubmit = async () => {
-      console.log(' here')
       loading.value = true
       const token = localStorage.getItem('token')
 
       try {
-        const response = axios
-          .post('https://www.chrisouboter.com/api/user/edit', {
-            method: 'POST',
-
-            body: JSON.stringify({
-              email: email.value,
-              name: name.value
-            }),
+        const response = await axios.post(
+          'https://www.chrisouboter.com/api/user/edit',
+          {
+            email: email.value,
+            name: name.value
+          },
+          {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
             }
-          })
-          .then((r) => {
-            console.log(r)
-          })
+          }
+        )
+        console.log(response.data.user)
+        email.value = response.data.user.email
+        loading.value = false
+        error.value = ''
+        success_message.value = 'Saved account details'
+
+        fetch()
       } catch (e) {
         loading.value = false
         error.value = 'An error occurred: ' + e
@@ -118,7 +170,9 @@ export default {
       name,
       error,
       loading,
-      handleSubmit
+      handleSubmit,
+      success_message,
+      confirmDeleteAccount
     }
   }
 }

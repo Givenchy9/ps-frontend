@@ -25,7 +25,7 @@
         <i class="fa-solid fa-magnifying-glass fa-xl text-gray-400"></i>
       </RouterLink>
       <RouterLink
-        to="/settings"
+        to="/user"
         active-class="text-gray-900 border-b-2 border-black"
         class="text-white font-bold py-2 px-4 hover:text-white duration-200"
       >
@@ -35,12 +35,4 @@
   </footer>
 </template>
 
-<style>
-/* .fontA1:hover {
-  display: none;
-}
-
-.fontA1:hover+.fontA2 {
-  display: block;
-} */
-</style>
+<style></style>

@@ -75,9 +75,8 @@
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      confirm_password: '',
+      email: 'chrisobt@outlook.com',
+      password: '12345678',
       error: null,
       loading: false
     }
