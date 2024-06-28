@@ -73,6 +73,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 export default {
   setup() {
@@ -81,6 +82,7 @@ export default {
     const error = ref(null)
     const loading = ref(true)
     const success_message = ref(null)
+    const router = useRouter()
 
     const fetch = () => {
       const token = localStorage.getItem('token')
@@ -123,6 +125,8 @@ export default {
           )
           .then((r) => {
             console.log('deleted account')
+            localStorage.clear()
+            router.push('/login')
           })
       } catch (e) {
         loading.value = false
@@ -172,7 +176,9 @@ export default {
       loading,
       handleSubmit,
       success_message,
-      confirmDeleteAccount
+      confirmDeleteAccount,
+      useRouter,
+      router
     }
   }
 }

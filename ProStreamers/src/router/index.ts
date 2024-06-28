@@ -6,8 +6,6 @@ import Series from '../views/home/Series.vue'
 import Details from '../views/Details.vue'
 import axios from 'axios'
 import Latest from '../views/home/Latest.vue'
-// import User from '../views/settings/User.vue';
-import Endpoint from '../views/settings/Endpoint.vue'
 
 const routes = [
   {
