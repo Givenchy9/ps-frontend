@@ -158,7 +158,7 @@ export default {
         fetch()
       } catch (e) {
         loading.value = false
-        error.value = 'An error occurred: ' + e
+        error.value = 'An error occurred, please try again. Any change was not saved'
         console.log(e)
       }
     }
