@@ -63,6 +63,12 @@ const routes = [
     meta: { hideFooter: true }
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/register.vue'),
+    meta: { hideFooter: true }
+  },
+  {
     path: '/settings',
     name: 'settings',
     component: () => import('../views/Settings.vue'),

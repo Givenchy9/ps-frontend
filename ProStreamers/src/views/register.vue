@@ -5,12 +5,24 @@
     >
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-          Sign in
+          Create an account
         </h2>
       </div>
       <form class="space-y-6" @submit.prevent="handleSubmit">
         <p class="mt-10 bg-red-400 rounded-sm text-center text-lg text-white">{{ this.error }}</p>
-
+        <div>
+          <label for="name" class="block text-sm font-medium leading-6 text-white">Name</label>
+          <div class="mt-2">
+            <input
+              v-model="name"
+              id="name"
+              name="name"
+              type="name"
+              required
+              class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-white"
             >Email address</label
@@ -45,6 +57,22 @@
               class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
             />
           </div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-white"
+              >Confirm password</label
+            >
+          </div>
+          <div class="mt-2">
+            <input
+              v-model="confirm_password"
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required=""
+              class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
+            />
+          </div>
         </div>
 
         <div>
@@ -52,7 +80,7 @@
             type="submit"
             class="flex shadow-xl w-full justify-center rounded-md bg-violet-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            <div v-if="!loading" class="text-white">Login</div>
+            <div v-if="!loading" class="text-white">Register</div>
             <div v-if="loading" class="loading-screen">
               <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
             </div>
@@ -61,10 +89,10 @@
       </form>
 
       <p class="mt-10 text-center text-sm text-white">
-        Not a member?
+        Already have a account?
         {{ ' ' }}
-        <a href="/register" class="font-semibold leading-6 text-indigo-300 hover:text-indigo-500"
-          >Register here</a
+        <a href="/login" class="font-semibold leading-6 text-indigo-300 hover:text-indigo-500"
+          >Login here</a
         >
       </p>
     </div>
@@ -75,6 +103,7 @@
 export default {
   data() {
     return {
+      name: '',
       email: '',
       password: '',
       confirm_password: '',
@@ -85,36 +114,40 @@ export default {
   methods: {
     async handleSubmit() {
       this.loading = true
+      this.error = null
+
+      if (this.password !== this.confirm_password) {
+        this.loading = false
+        this.error = 'Passwords do not match'
+        return
+      }
 
       try {
-        const response = await fetch('https://www.chrisouboter.com/api/user/login', {
+        const response = await fetch('https://www.chrisouboter.com/api/user/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             email: this.email,
-            password: this.password
+            password: this.password,
+            name: this.name
           })
         })
+
         const data = await response.json()
+
         if (data.success) {
-          console.log(data.user)
-          localStorage.setItem('token', data.token)
-          localStorage.setItem('user', JSON.stringify(data.user))
-          localStorage.setItem('tokenTime', new Date().toISOString())
           this.error = ''
           this.loading = false
           this.$router.push('/films')
         } else {
-          this.loading = false
-
-          this.error = 'Password or Email combination is incorrect'
+          this.error = data.message
         }
       } catch (e) {
+        this.error = 'An error occurred: ' + e.message
+      } finally {
         this.loading = false
-        console.log(response)
-        this.error = 'An error occured: ' + e
       }
     }
   }
