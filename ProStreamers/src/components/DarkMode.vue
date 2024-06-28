@@ -1,10 +1,13 @@
 <template>
-  <div @click="toggleDark()" class="toggle-switch-container flex items-center align-middle">
+  <div
+    @click="toggleDark()"
+    class="toggle-switch-container flex items-center duration-200 align-middle"
+  >
     <input
       type="checkbox"
       id="toggle-switch"
       v-model="isDark"
-      class="toggle-input appearance-none w-10 h-5 bg-gray-400 rounded-3xl relative cursor-pointer outline-none checked:bg-blue-500"
+      class="toggle-input duration-200 appearance-none w-10 h-5 bg-gray-400 rounded-3xl relative cursor-pointer outline-none checked:bg-blue-500"
     />
   </div>
 </template>
@@ -13,7 +16,6 @@
 import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
-console.log(isDark.value)
 const toggleDark = useToggle(isDark)
 </script>
 

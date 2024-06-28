@@ -98,7 +98,6 @@ export default {
         })
         const data = await response.json()
         if (data.success) {
-          console.log(data.user)
           localStorage.setItem('token', data.token)
           localStorage.setItem('user', JSON.stringify(data.user))
           localStorage.setItem('tokenTime', new Date().toISOString())
@@ -112,7 +111,6 @@ export default {
         }
       } catch (e) {
         this.loading = false
-        console.log(response)
         this.error = 'An error occured: ' + e
       }
     }

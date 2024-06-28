@@ -20,7 +20,6 @@ export default defineComponent({
     const favorited = ref(null)
 
     function toggleFavorite(filmData) {
-      console.log('toggle favorite' + filmId.value)
       // Implement the actual logic to toggle the favorite status here
       let token = localStorage.getItem('token')
 
@@ -39,7 +38,6 @@ export default defineComponent({
           }
         )
         .then((response) => {
-          console.log(response.data)
           checkFavorite()
         })
         .catch()
@@ -64,7 +62,6 @@ export default defineComponent({
         )
         .then((response) => {
           favorited.value = response.data.data
-          console.log(favorited.value)
           loading.value = false
         })
         .catch()
@@ -77,9 +74,6 @@ export default defineComponent({
         .then((response) => {
           poster.value = response.data.Poster
           rating.value = response.data.Metascore
-
-          console.log(response.data)
-          console.log(response.data.Poster)
         })
         .catch((error) => {
           console.error('Error fetching poster', error)
@@ -149,9 +143,13 @@ export default defineComponent({
 
             <div>
               <div class="mt-4">
-                <button class="play button mx-2 text-white">
+                <a
+                  target="_blank"
+                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                  class="play button mx-2 text-white"
+                >
                   <i class="fa-solid fa-play fa-md"></i> Play
-                </button>
+                </a>
                 <button
                   v-if="favorited"
                   class="bg-red-200 button mx-2 text-black"

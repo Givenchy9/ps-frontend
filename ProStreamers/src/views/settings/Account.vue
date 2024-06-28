@@ -124,14 +124,12 @@ export default {
             }
           )
           .then((r) => {
-            console.log('deleted account')
             localStorage.clear()
             router.push('/login')
           })
       } catch (e) {
         loading.value = false
         error.value = 'An error occurred: ' + e
-        console.log(e)
       }
     }
 
@@ -153,7 +151,6 @@ export default {
             }
           }
         )
-        console.log(response.data.user)
         email.value = response.data.user.email
         loading.value = false
         error.value = ''
@@ -163,7 +160,6 @@ export default {
       } catch (e) {
         loading.value = false
         error.value = 'An error occurred, please try again. Any change was not saved'
-        console.log(e)
       }
     }
 
