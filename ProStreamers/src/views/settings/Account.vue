@@ -154,12 +154,15 @@ export default {
         email.value = response.data.user.email
         loading.value = false
         error.value = ''
-        success_message.value = 'Saved account details'
+        success_message.value = 'Saved account details successfully'
 
         fetch()
       } catch (e) {
         loading.value = false
-        error.value = 'An error occurred, please try again. Any change was not saved'
+        error.value = ''
+
+        error.value = 'An error occurred, any changes were not saved'
+        fetch()
       }
     }
 

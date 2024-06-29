@@ -4,12 +4,20 @@
       <div class="rounded-xl h-full">
         <div class="grid grid-col-2 gap-2">
           <h1 class="text-gray-700 text-2xl py-2 dark:text-white">Settings</h1>
-          <RouterLink to="/user" active-class="bg-black/40"
-            class="py-2 px-4 rounded-full bg-gray-200 font-bold text-center hover:bg-white/40 duration-200 hover:text-white">
-            Account</RouterLink>
-          <RouterLink to="/endpoint" active-class="bg-black/40"
-            class="py-2 px-4 rounded-full bg-gray-200 font-bold text-center hover:bg-white/40 duration-200 hover:text-white">
-            Info</RouterLink>
+          <RouterLink
+            to="/user"
+            active-class="bg-black/40"
+            class="py-2 px-4 rounded-full bg-gray-200 font-bold text-center hover:bg-white/40 duration-200 hover:text-white"
+          >
+            Account</RouterLink
+          >
+          <RouterLink
+            to="/endpoint"
+            active-class="bg-black/40"
+            class="py-2 px-4 rounded-full bg-gray-200 font-bold text-center hover:bg-white/40 duration-200 hover:text-white"
+          >
+            Info</RouterLink
+          >
         </div>
       </div>
     </div>
