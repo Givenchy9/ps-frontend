@@ -2,21 +2,27 @@
   <div class="flex min-h-full flex-1 flex-col justify-center lg:px-8">
     <div class="bg-transparent-10 p-4 rounded-xl mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
+        <h2
+          class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white"
+        >
           Edit account information
         </h2>
       </div>
       <div v-if="loading" class="loading-screen flex justify-center py-12">
-        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white fa-xl"></i>
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white fa-xl"></i>
       </div>
       <form v-if="!loading" class="space-y-6" @submit.prevent="handleSubmit">
-        <p class="mt-10 bg-red-400 rounded-sm text-center text-lg text-white">{{ error }}</p>
-        <p class="mt-10 bg-green-400 rounded-sm text-center text-lg text-white">
+        <p class="mt-10 bg-red-400 rounded-sm text-center text-lg text-black dark:text-white">
+          {{ error }}
+        </p>
+        <p class="mt-10 bg-green-400 rounded-sm text-center text-lg text-black dark:text-white">
           {{ success_message }}
         </p>
 
         <div>
-          <label for="name" class="block text-sm font-medium leading-6 text-white">Name</label>
+          <label for="name" class="block text-sm font-medium leading-6 text-black dark:text-white"
+            >Name</label
+          >
           <div class="mt-2">
             <input
               v-model="name"
@@ -29,7 +35,7 @@
           </div>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-white"
+          <label for="email" class="block text-sm font-medium leading-6 text-black dark:text-white"
             >Email address</label
           >
           <div class="mt-2">
@@ -52,7 +58,7 @@
           >
             <div v-if="!loading" class="">Save</div>
             <div v-if="loading" class="loading-screen">
-              <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
+              <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
             </div>
           </button>
         </div>
@@ -60,11 +66,11 @@
       <button
         @click="confirmDeleteAccount"
         v-if="!loading"
-        class="my-4 flex shadow-xl w-full justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-xl hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        class="my-4 flex shadow-xl w-full justify-center rounded-md bg-red-400 px-3 py-1.5 text-sm font-semibold leading-6 text-black dark:text-white shadow-xl hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
-        <div v-if="!loading" class="text-white">Delete account</div>
+        <div v-if="!loading" class="text-black dark:text-white">Delete account</div>
         <div v-if="loading" class="loading-screen">
-          <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
+          <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
         </div>
       </button>
     </div>

@@ -2,11 +2,14 @@
   <div class="film-card col-span-1 w-56 rounded-sm relative" @click="redirectToDetails">
     <img :src="getPoster()" class="rounded-xl blur-bottom poster-image w-56" />
 
-    <div class="play-overlay absolute inset-0 flex items-center justify-center text-white text-2xl font-bold">
+    <div
+      class="play-overlay absolute inset-0 flex items-center justify-center text-white text-2xl font-bold"
+    >
       <i class="fa-solid fa-play flex items-center pointer-events-none fa-xl"></i>
     </div>
     <div
-      class="details-container duration-700 absolute bottom-0 w-full bg-w backdrop-blur-1 bg-opacity-50 text-white p-2 rounded-b-xl">
+      class="details-container duration-700 absolute bottom-0 w-full bg-w backdrop-blur-1 bg-opacity-50 text-white p-2 rounded-b-xl"
+    >
       <h1 class="movie-title">{{ film.title }}</h1>
       <i class="fa-solid fa-play fa-md play-icon hidden"></i>
       <div class="flex space-x-2">
