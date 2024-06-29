@@ -112,7 +112,7 @@ router.beforeEach(async (to, from, next) => {
     const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
     console.log('Calculated ' + differenceInHours)
 
-    if (differenceInHours > 0.25) {
+    if (differenceInHours > 0.1) {
       console.log('Getting..')
 
       try {
