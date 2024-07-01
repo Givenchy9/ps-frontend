@@ -18,6 +18,14 @@
           >
             Info</RouterLink
           >
+
+          <RouterLink
+            to="/dashboard"
+            active-class="bg-black/40"
+            class="py-2 px-4 rounded-full bg-gray-200 font-bold text-center hover:bg-white/40 duration-200 hover:text-white"
+          >
+            Dashboard</RouterLink
+          >
         </div>
       </div>
     </div>
