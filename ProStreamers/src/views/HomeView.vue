@@ -58,14 +58,7 @@ export default defineComponent({
     const router = useRouter()
     let username = ''
 
-    // Fetch username from localStorage on component mount
-    onMounted(() => {
-      let user = localStorage.getItem('user')
-      if (user) {
-        user = JSON.parse(user)
-        username = user?.name
-      }
-    })
+    // Fetch username from localStorage on 
 
     // Function to log out user
     const logOut = () => {

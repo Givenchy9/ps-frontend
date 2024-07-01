@@ -84,7 +84,6 @@ export default {
   methods: {
     async handleSubmit() {
       this.loading = true
-
       try {
         const response = await fetch('https://www.chrisouboter.com/api/user/login', {
           method: 'POST',

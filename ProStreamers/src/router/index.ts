@@ -52,6 +52,12 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../views/Dashboard.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
         path: '/settings',
         name: 'settings',
         component: () => import('../views/Settings.vue'),
@@ -101,7 +107,19 @@ router.beforeEach(async (to, from, next) => {
   const user = localStorage.getItem('user')
   const time = localStorage.getItem('tokenTime')
 
+  let userJSON = JSON.parse(user);
+  console.log(userJSON)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (to.name == "dashboard") {
+      if (userJSON.email == "admin@gmail.com") {
+        console.log("IS ADMIN");
+      } else {
+        return next('/films')
+
+      }
+    }
+
+
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
