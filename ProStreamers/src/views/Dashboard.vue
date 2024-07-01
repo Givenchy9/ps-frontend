@@ -1,18 +1,13 @@
 <template>
-  <div v-if="loading" class="flex m-auto w-full"><i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i></div>
-  <div v-if="!loading" class="Films flex">
+  <div v-if="loading" class="flex justify-center items-center w-full h-full">
+  <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
+</div>
+  <div v-if="!loading" class="flex flex-row">
   
     <div class="w-2/4">
       <table class="table-auto w-full text-white">
         <thead>
-          <tr>
-            <th class="px-4 py-2">ID</th>
-
-            <th class="px-4 py-2">Title</th>
-            <th class="px-4 py-2">Genre</th>
-
-            <th class="px-4 py-2">Actions</th>
-          </tr>
+          
         </thead>
         <tbody>
           <tr v-for="d in data" :key="d.id">
@@ -34,7 +29,8 @@
       </table>
     </div>
     <div class="w-2/4 p-2 fixed right-0">
-      <form class="space-y-6" @submit.prevent="handleSubmit">
+      <h1 class="text-2xl text-white front-bold">Create content</h1>
+      <form class="space-y-4" @submit.prevent="handleSubmit">
 
 
         <div>
