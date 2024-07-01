@@ -62,27 +62,26 @@
     ></textarea>
   </div>
 </div>
+        
         <div>
-
           <div class="mt-2">
-            <select v-model="genre" placeholder="Pick a genre" class="w-full text-black p-2 rounded-full bg-gray-200">
+            <select v-model="genre" class="w-full p-2 rounded-full bg-gray-200">
               <option>Animation</option>  
-          <option>Action</option>
-          <option>Adventure</option>
-          <option>Horror</option>
-          <option>Drama</option>
-          <option>Romance</option>
+              <option>Action</option>
+              <option>Adventure</option>
+              <option>Horror</option>
+              <option>Drama</option>
+              <option>Romance</option>
+            
         </select>
           </div>
         </div>
-
         <div>
           <div class="mt-2">
             <select v-model="content" class="w-full p-2 rounded-full bg-gray-200">
               <option>Movie</option>
               <option>Serie</option>
-              
-
+            
         </select>
           </div>
         </div>
@@ -151,7 +150,7 @@ export default defineComponent({
 
     const title = ref('')
     const description = ref('')
-    const genre = ref('Comedy')
+    const genre = ref('Animation')
     const content = ref('Movie')
     const episodes = ref('')
     const length = ref('')
@@ -177,6 +176,8 @@ export default defineComponent({
         }).then((r) => {
           console.log(r);
       loading.value = false
+      fetch()
+
         })
     }
 
