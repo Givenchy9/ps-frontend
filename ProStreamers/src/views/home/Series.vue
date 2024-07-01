@@ -9,13 +9,15 @@
           placeholder="Search" v-model="search" />
       </div>
       <div class="rounded-xl">
-        <h2 class="text-white text-center mt-2 p-2 text-gray-700 dark:text-white">Filter genre</h2>
+        <h2 class="text-center mt-2 p-2 text-black dark:text-white">Filter genre</h2>
         <select v-model="selected" class="w-full p-2 rounded-full bg-gray-200">
           <option>All</option>
           <option>Animation</option>
           <option>Action</option>
           <option>Adventure</option>
           <option>Horror</option>
+          <option>Drama</option>
+          <option>Romance</option>
         </select>
       </div>
       <div class="mt-2">
@@ -23,6 +25,13 @@
         <label for="choose-me"
           class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200">
           Alphabetical
+        </label>
+      </div>
+      <div class="mt-2">
+        <input v-model="eps" type="checkbox" id="choose-me2" class="peer hidden" />
+        <label for="choose-me2"
+          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200">
+          Episodes
         </label>
       </div>
     </div>
@@ -39,15 +48,17 @@
 </template>
 
 <script lang="ts">
+import FilmCard from '@/components/Card.vue'
 import { ref, onMounted, watch, defineComponent } from 'vue'
 import axios from 'axios'
-import FilmCard from '@/components/Card.vue'
+
 import Footer from '@/components/Footer.vue'
 
 interface Film {
   id: number
   title: string
   genre: string
+  episodes: number
 }
 
 export default defineComponent({
@@ -61,6 +72,8 @@ export default defineComponent({
     const selected = ref('All')
     const search = ref('')
     const alfa = ref(false)
+    const eps = ref(false)
+
 
     const fetchFilms = () => {
       filter()
@@ -85,6 +98,12 @@ export default defineComponent({
               return a.title.localeCompare(b.title)
             })
           }
+
+        if (eps.value) {
+          films = films.sort((a: Film, b: Film) => {
+            return b.episodes - a.episodes
+          })
+        }
 
           data.value = films
         })
@@ -111,6 +130,8 @@ export default defineComponent({
     watch(selected, filter)
     watch(search, searchData)
     watch(alfa, filter)
+    watch(eps, filter)
+
 
     return {
       data,
@@ -120,7 +141,8 @@ export default defineComponent({
       alfa,
       fetchFilms,
       filter,
-      searchData
+      searchData,
+      eps
     }
   }
 })
