@@ -113,7 +113,7 @@ export default defineComponent({
 <template>
   <div class="container flex w-full rounded-md">
     <div class="film-details m-auto flex">
-      <img v-if="!loading" :src="poster" class="poster-image w-1/3 mx-auto" />
+      <img v-if="!loading" :src="poster" class="poster-image w-1/4 mx-auto" />
       <div v-if="loading" class="loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
       </div>
