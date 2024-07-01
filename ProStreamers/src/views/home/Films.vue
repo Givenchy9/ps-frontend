@@ -41,9 +41,10 @@
 </template>
 
 <script lang="ts">
+import FilmCard from '@/components/Card.vue'
 import { ref, onMounted, watch, defineComponent } from 'vue'
 import axios from 'axios'
-import FilmCard from '@/components/Card.vue'
+
 import Footer from '@/components/Footer.vue'
 
 interface Film {
