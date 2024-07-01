@@ -1,34 +1,49 @@
 <template>
   <div class="Films flex">
-    <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
-      <div class="relative w-full m-auto">
-        <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
+    
+    <div class="film-content p-4 fixed">
+      <form v-if="!loading" class="space-y-6 w-1/2" @submit.prevent="handleSubmit">
 
-        <input type="text"
-          class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search" v-model="search" />
-      </div>
-      <div class="rounded-xl">
+        <div>
+          <label for="name" class="block text-sm font-medium leading-6 text-black dark:text-white"
+            >Name</label
+          >
+          <div class="mt-2">
+            <input
+              v-model="name"
+              id="name"
+              name="name"
+              type="text"
+              class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium leading-6 text-black dark:text-white"
+            >Email address</label
+          >
+          <div class="mt-2">
+            <input
+              v-model="email"
+              id="email"
+              name="email"
+              class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
 
-      </div>
-      <div class="mt-2">
-        <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
-        <label for="choose-me"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200">
-          Alphabetical
-        </label>
-      </div>
-    </div>
-    <div class="film-content ml-1/4 w-3/4 p-4 fixed">
-      <div v-if="loading" class="p-4 loading-screen">
-        <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-gray-700 dark:text-white"></i>
-      </div>
-      <h1 class="text-5xl font-bold py-4 text-gray-700 dark:text-white">Your favorites</h1>
-      <p v-if="!loading && data.length === 0" class="text-2xl text-gray-700 dark:text-white">
-        Oops, you don't have favorites yet!
-      </p>
-
+        <div>
+          <button
+            type="submit"
+            class="flex shadow-xl w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-xl hover:text-white hover:bg-black/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <div v-if="!loading" class="">Save</div>
+            <div v-if="loading" class="loading-screen">
+              <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
+            </div>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <Footer />
@@ -37,84 +52,25 @@
 <script lang="ts">
 import { ref, onMounted, watch, defineComponent } from 'vue'
 import axios from 'axios'
-import FilmCard from '@/components/Card.vue'
 import Footer from '@/components/Footer.vue'
-
-interface Film {
-  id: number
-  title: string
-  genre: string
-}
 
 export default defineComponent({
   components: {
-    FilmCard,
     Footer
   },
   setup() {
-    const data = ref<Film[]>([])
+    const data = ref()
     const loading = ref(false)
     const selected = ref('All')
     const search = ref('')
     const alfa = ref(false)
 
-    const fetchFilms = () => {
-      filter()
+    const name = ref('')
+    const email = ref('')
+
+    const handleSubmit = () => {
+      console.log("Console loggg");
     }
-
-    const filter = () => {
-      loading.value = true
-      const url = 'http://chrisouboter.com/api/user/favorites'
-      let token = localStorage.getItem('token')
-      axios
-        .post(
-          url,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
-        .then((response) => {
-          let films = response.data.data
-          if (selected.value !== 'All') {
-            films = films.filter((film: Film) => {
-              return film.genre.toLowerCase().includes(selected.value.toLowerCase())
-            })
-          }
-
-          if (alfa.value) {
-            films = films.sort((a: Film, b: Film) => {
-              return a.title.localeCompare(b.title)
-            })
-          }
-
-          data.value = films
-        })
-        .catch((error) => {
-          console.error('Error fetching films', error)
-        })
-        .finally(() => {
-          loading.value = false
-        })
-    }
-
-    const searchData = (newSearch: string) => {
-      if (newSearch.length === 0) {
-        fetchFilms()
-      } else {
-        data.value = data.value.filter((film: Film) => {
-          return film.title.toLowerCase().includes(newSearch.toLowerCase())
-        })
-      }
-    }
-
-    onMounted(fetchFilms)
-
-    watch(selected, filter)
-    watch(search, searchData)
-    watch(alfa, filter)
 
     return {
       data,
@@ -122,9 +78,9 @@ export default defineComponent({
       selected,
       search,
       alfa,
-      fetchFilms,
-      filter,
-      searchData
+      email,
+      name,
+      handleSubmit,
     }
   }
 })

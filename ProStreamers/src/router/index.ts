@@ -58,6 +58,12 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../views/Dashboard.vue'),
+        meta: { hideFooter: true }
+      },
+      {
         path: '/settings',
         name: 'settings',
         component: () => import('../views/Settings.vue'),
@@ -90,6 +96,7 @@ const routes = [
     component: () => import('../views/register.vue'),
     meta: { hideFooter: true }
   },
+  
 
   {
     path: '/:pathMatch(.*)*',
@@ -115,7 +122,6 @@ router.beforeEach(async (to, from, next) => {
         console.log("IS ADMIN");
       } else {
         return next('/films')
-
       }
     }
 
