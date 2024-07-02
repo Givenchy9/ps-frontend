@@ -73,7 +73,7 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://chrisouboter.com/api/user/favorites'
+      const url = 'http://127.0.0.1:8000/api/user/favorites'
       let token = localStorage.getItem('token')
       axios
         .post(

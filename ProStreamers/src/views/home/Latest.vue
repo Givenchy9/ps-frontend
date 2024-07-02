@@ -68,7 +68,7 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://chrisouboter.com/api/latest'
+      const url = 'http://127.0.0.1:8000/api/latest'
 
       axios
         .get(url)

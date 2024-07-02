@@ -140,7 +140,7 @@ router.beforeEach(async (to, from, next) => {
       console.log('Getting..')
 
       try {
-        const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
+        const response = await axios.get('http://127.0.0.1:8000/api/user/get', {
           headers: {
             Authorization: `Bearer ${token}`
           }

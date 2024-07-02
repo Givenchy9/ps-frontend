@@ -161,7 +161,7 @@ export default defineComponent({
       console.log("huh");
       const token = localStorage.getItem('token')
 
-      let url = "http://www.chrisouboter.com/api/content/create"
+      let url = "http://127.0.0.1:8000/api/content/create"
       axios.post(url, {
         title: title.value,
         description: description.value,
@@ -187,7 +187,7 @@ export default defineComponent({
       LoadingDelete.value = true;
       const token = localStorage.getItem('token')
 
-      let url = "http://www.chrisouboter.com/api/content/delete"
+      let url = "http://127.0.0.1:8000/api/content/delete"
       axios
       .post(url, {
         'content_id': id
@@ -209,7 +209,7 @@ export default defineComponent({
       loading.value = true
       console.log("loaded");
       const token = localStorage.getItem('token')
-      let url = "http://www.chrisouboter.com/api/content/all"
+      let url = "http://127.0.0.1:8000/api/content/all"
 
       axios
       .post(url, {}, {
