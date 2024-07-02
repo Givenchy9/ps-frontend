@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import http from '../http-service'
 export default {
   data() {
     return {
@@ -85,17 +86,11 @@ export default {
     async handleSubmit() {
       this.loading = true
       try {
-        const response = await fetch('https://www.chrisouboter.com/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password
-          })
+        const response = await http.post('user/login', {
+          email: this.email,
+          password: this.password
         })
-        const data = await response.json()
+        const data = response.data
         if (data.success) {
           localStorage.setItem('token', data.token)
           localStorage.setItem('user', JSON.stringify(data.user))

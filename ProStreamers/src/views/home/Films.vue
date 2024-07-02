@@ -35,6 +35,7 @@
       </div>
     </div>
     <div class="film-content ml-1/4 w-3/4 p-4 fixed">
+      <h1 v-if="data.length == 0 && !loading" class="text-white text-4xl">Oops, no results!</h1>
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
