@@ -96,11 +96,10 @@ const routes = [
     component: () => import('../views/register.vue'),
     meta: { hideFooter: true }
   },
-  
 
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/film' // Redirect any unknown paths to the home
+    redirect: '/films' // Redirect any unknown paths to the home
   }
 ]
 
@@ -114,25 +113,30 @@ router.beforeEach(async (to, from, next) => {
   const user = localStorage.getItem('user')
   const time = localStorage.getItem('tokenTime')
 
-  let userJSON = JSON.parse(user);
+  if (to.path === '/login' || to.path === '/register') {
+    return next()
+  }
+  if (!user || !time) {
+    return next('/login')
+  }
+  let userJSON = JSON.parse(user)
   console.log(userJSON)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (to.name == "dashboard") {
-      if (userJSON.email == "admin@gmail.com") {
-        console.log("IS ADMIN");
+    if (to.name == 'dashboard') {
+      if (userJSON.email == 'admin@gmail.com') {
+        console.log('IS ADMIN')
       } else {
         return next('/films')
       }
     }
-
 
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
     }
 
-    const loginDate = new Date(time)
-    const now = new Date()
+    const loginDate = new Date(time).getTime()
+    const now = new Date().getTime()
     const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
     console.log('Calculated ' + differenceInHours)
 
