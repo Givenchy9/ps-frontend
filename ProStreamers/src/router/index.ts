@@ -1,12 +1,13 @@
+// Importing dependencies and views
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Films from '../views/home/Films.vue'
-
 import Series from '../views/home/Series.vue'
 import Details from '../views/Details.vue'
 import axios from 'axios'
 import Latest from '../views/home/Latest.vue'
 
+// defining routes
 const routes = [
   {
     path: '/',
@@ -83,7 +84,6 @@ const routes = [
       }
     ]
   },
-
   {
     path: '/login',
     name: 'login',
@@ -99,16 +99,19 @@ const routes = [
 
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/films' // Redirect any unknown paths to the home
+    redirect: '/films'
   }
 ]
 
+// init router and give the routers
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
+// before every route run this code
 router.beforeEach(async (to, from, next) => {
+  // get from localstorage
   const token = localStorage.getItem('token')
   const user = localStorage.getItem('user')
   const time = localStorage.getItem('tokenTime')
@@ -116,12 +119,15 @@ router.beforeEach(async (to, from, next) => {
   if (to.path === '/login' || to.path === '/register') {
     return next()
   }
+
+  // if user or time are not defined, return to /login
   if (!user || !time) {
     return next('/login')
   }
+  // get user information
   let userJSON = JSON.parse(user)
-  console.log(userJSON)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // check if user email is admin when routing to dashboard
     if (to.name == 'dashboard') {
       if (userJSON.email == 'admin@gmail.com') {
         console.log('IS ADMIN')
@@ -130,19 +136,19 @@ router.beforeEach(async (to, from, next) => {
       }
     }
 
+    // if one of these is undefined in localstorage, clear localstorage and return to login
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
     }
 
+    // calculate time since API key was fetched
     const loginDate = new Date(time).getTime()
     const now = new Date().getTime()
     const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
-    console.log('Calculated ' + differenceInHours)
 
+    // if token is older than 0.1hrs > refetch API token
     if (differenceInHours > 0.1) {
-      console.log('Getting..')
-
       try {
         const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
           headers: {
@@ -150,22 +156,19 @@ router.beforeEach(async (to, from, next) => {
           }
         })
 
+        // if response was success, reset tokenTime in localstorage
         if (response.data.success) {
-          console.log('API key still available')
           localStorage.setItem('tokenTime', new Date().toISOString())
           return next()
         } else {
-          console.log('API key not valid, clearing session')
           localStorage.clear()
           return next('/login')
         }
       } catch (error) {
-        console.error('Error checking authentication:', error)
         localStorage.clear()
         return next('/login')
       }
     }
-
     return next()
   } else {
     return next()
