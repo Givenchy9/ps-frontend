@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div
-      class="bg-gray-600 shadow-xl bg-transparent-10 p-4 rounded-xl mt-10 sm:mx-auto sm:w-full sm:max-w-sm"
+      class="bg-gray-600 black: shadow-xl bg-transparent-10 p-4 rounded-xl mt-10 sm:mx-auto sm:w-full sm:max-w-sm"
     >
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
@@ -85,11 +85,17 @@ export default {
     async handleSubmit() {
       this.loading = true
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+        const csrfResponse = await fetch('http://www.chrisouboter.com/csrf');
+    const csrfData = await csrfResponse.json();
+    const csrfToken = csrfData.csrfToken;
+        console.log(csrfToken);
+
+    const response = await fetch('http://www.chrisouboter.com/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
           body: JSON.stringify({
             email: this.email,
             password: this.password

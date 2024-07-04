@@ -66,8 +66,8 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const movieUrl = 'http://127.0.0.1:8000/api/all/movie'
-      const seriesUrl = 'http://127.0.0.1:8000/api/all/serie'
+      const movieUrl = 'http://www.chrisouboter.com/api/all/movie'
+      const seriesUrl = 'http://www.chrisouboter.com/api/all/serie'
 
       axios
         .all([axios.get(movieUrl), axios.get(seriesUrl)])

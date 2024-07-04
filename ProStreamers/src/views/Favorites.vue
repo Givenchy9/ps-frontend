@@ -33,7 +33,7 @@
       </div>
       <h1 class="text-5xl font-bold py-4 text-gray-700 dark:text-white">Your favorites</h1>
       <p v-if="!loading && data.length === 0" class="text-2xl text-gray-700 dark:text-white">
-        Oops, you don't have favorites yet!
+        Oops, no results
       </p>
       <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
@@ -73,7 +73,7 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://127.0.0.1:8000/api/user/favorites'
+      const url = 'http://www.chrisouboter.com/api/user/favorites'
       let token = localStorage.getItem('token')
       axios
         .post(

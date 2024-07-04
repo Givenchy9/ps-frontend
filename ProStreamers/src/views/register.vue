@@ -123,10 +123,15 @@ export default {
       }
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/user/create', {
+        const csrfResponse = await fetch('http://www.chrisouboter.com/csrf');
+      const csrfData = await csrfResponse.json();
+      const csrfToken = csrfData.csrfToken;
+        console.log(csrfToken);
+        const response = await fetch('http://www.chrisouboter.com/api/user/create', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
           },
           body: JSON.stringify({
             email: this.email,

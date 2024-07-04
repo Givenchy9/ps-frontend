@@ -70,7 +70,7 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
-      const url = 'http://127.0.0.1:8000/api/all/serie'
+      const url = 'http://www.chrisouboter.com/api/all/serie'
 
       axios
         .get(url)

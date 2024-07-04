@@ -23,7 +23,7 @@ export default defineComponent({
       // Implement the actual logic to toggle the favorite status here
       let token = localStorage.getItem('token')
 
-      let url = 'http://127.0.0.1:8000/api/user/toggle'
+      let url = 'http://www.chrisouboter.com/api/user/toggle'
 
       axios
         .post(
@@ -47,7 +47,7 @@ export default defineComponent({
       loading.value = true
 
       let token = localStorage.getItem('token')
-      let url = 'http://127.0.0.1:8000/api/user/check'
+      let url = 'http://www.chrisouboter.com/api/user/check'
       axios
         .post(
           url,
@@ -82,7 +82,7 @@ export default defineComponent({
 
     onMounted(() => {
       loading.value = true
-      const url = 'http://127.0.0.1:8000/api/content/' + filmId.value
+      const url = 'http://www.chrisouboter.com/api/content/' + filmId.value
       axios
         .get(url)
         .then((response) => {

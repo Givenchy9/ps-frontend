@@ -58,12 +58,6 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('../views/Dashboard.vue'),
-        meta: { hideFooter: true }
-      },
-      {
         path: '/settings',
         name: 'settings',
         component: () => import('../views/Settings.vue'),
@@ -100,7 +94,7 @@ const routes = [
 
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/film' // Redirect any unknown paths to the home
+    redirect: '/film'
   }
 ]
 
@@ -109,43 +103,49 @@ const router = createRouter({
   routes
 })
 
+// before each router redirect
 router.beforeEach(async (to, from, next) => {
+
+  // get information from localstorage
   const token = localStorage.getItem('token')
   const user = localStorage.getItem('user')
   const time = localStorage.getItem('tokenTime')
 
+  if (!user) {
+    return next('/login')
+  }
+
   let userJSON = JSON.parse(user);
   console.log(userJSON)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (to.name == "dashboard") {
-      if (userJSON.email == "admin@gmail.com") {
-        console.log("IS ADMIN");
-      } else {
-        return next('/films')
-      }
-    }
 
+    // redirect non-adminds to home
+    if (to.name == "dashboard") {
+      if (!(userJSON.email == "admin@gmail.com")) {
+        return next('/films')
+      } 
+    }
 
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
     }
 
+    // check time since token created
     const loginDate = new Date(time)
     const now = new Date()
-    const differenceInHours = (now - loginDate) / (1000 * 60 * 60)
-    console.log('Calculated ' + differenceInHours)
+    const differenceInHours = (now.getTime() - loginDate.getTime()) / (1000 * 60 * 60)
 
+    // if token is older than 0.1 hours, check token in database
     if (differenceInHours > 0.1) {
-      console.log('Getting..')
-
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/user/get', {
+        const response = await axios.get('http://www.chrisouboter.com/api/user/get', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
 
+        // handle refetch of token
         if (response.data.success) {
           console.log('API key still available')
           localStorage.setItem('tokenTime', new Date().toISOString())
