@@ -87,19 +87,6 @@ export default {
       this.loading = true
 
       try {
-<<<<<<< Updated upstream
-        const response = await fetch('http://www.chrisouboter.com/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password
-          })
-        })
-        console.log(response.json())
-=======
         const csrf = await axios.get('http://api.chrisouboter.com/csrf')
         let csrfToken = csrf.data.csrfToken
         console.log('csrfToken = ' + csrfToken + '  :' + csrf)
@@ -117,7 +104,6 @@ export default {
             }
           }
         )
->>>>>>> Stashed changes
         console.log(response)
         const data = await response.json()
         console.log(data)
