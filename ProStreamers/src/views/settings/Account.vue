@@ -1,6 +1,6 @@
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center lg:px-8">
-    <div class="bg-transparent-10 p-4 rounded-xl mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="bg-transparent-10 p-2 rounded-xl sm:mx-auto sm:w-full sm:max-w-sm">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2
           class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white"
