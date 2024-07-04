@@ -58,7 +58,7 @@ export default defineComponent({
     const router = useRouter()
     let username = ''
 
-    // Fetch username from localStorage on 
+    // Fetch username from localStorage on
 
     // Function to log out user
     const logOut = () => {

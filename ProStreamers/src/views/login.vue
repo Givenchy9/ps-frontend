@@ -85,22 +85,18 @@ export default {
     async handleSubmit() {
       this.loading = true
       try {
-        const csrfResponse = await fetch('http://www.chrisouboter.com/csrf');
-    const csrfData = await csrfResponse.json();
-    const csrfToken = csrfData.csrfToken;
-        console.log(csrfToken);
-
-    const response = await fetch('http://www.chrisouboter.com/api/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
-      },
+        const response = await fetch('http://www.chrisouboter.com/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
             email: this.email,
             password: this.password
           })
         })
+        console.log(response.json())
+        console.log(response)
         const data = await response.json()
         if (data.success) {
           localStorage.setItem('token', data.token)

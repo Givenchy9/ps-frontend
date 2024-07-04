@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Films from '../views/home/Films.vue'
 
@@ -90,7 +90,6 @@ const routes = [
     component: () => import('../views/register.vue'),
     meta: { hideFooter: true }
   },
-  
 
   {
     path: '/:pathMatch(.*)*',
@@ -99,38 +98,30 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 })
 
 // before each router redirect
 router.beforeEach(async (to, from, next) => {
-
   // get information from localstorage
   const token = localStorage.getItem('token')
   const user = localStorage.getItem('user')
   const time = localStorage.getItem('tokenTime')
 
-  if (!user) {
-    return next('/login')
-  }
-
-  let userJSON = JSON.parse(user);
-  console.log(userJSON)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-
     // redirect non-adminds to home
-    if (to.name == "dashboard") {
-      if (!(userJSON.email == "admin@gmail.com")) {
-        return next('/films')
-      } 
-    }
 
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
     }
-
+    if (to.name == 'dashboard') {
+      let userJSON = JSON.parse(user)
+      if (!(userJSON.email == 'admin@gmail.com')) {
+        return next('/films')
+      }
+    }
     // check time since token created
     const loginDate = new Date(time)
     const now = new Date()
