@@ -30,6 +30,8 @@
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
+      <h1 v-if="data.length == 0 && !loading" class="text-white text-4xl">Oops, no results</h1>
+
       <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
       </div>

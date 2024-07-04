@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     isLoggedOut() {
-      return !localStorage.getItem('token') // Check if the token is absent
+      return !localStorage.getItem('token') // Check if the token is there
     }
   }
 }
