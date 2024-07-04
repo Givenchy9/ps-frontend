@@ -66,8 +66,13 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
+<<<<<<< Updated upstream
       const movieUrl = 'http://www.chrisouboter.com/api/all/movie'
       const seriesUrl = 'http://www.chrisouboter.com/api/all/serie'
+=======
+      const movieUrl = 'http://api.chrisouboter.com/api/all/movie'
+      const seriesUrl = 'http://api.chrisouboter.com/api/all/serie'
+>>>>>>> Stashed changes
 
       axios
         .all([axios.get(movieUrl), axios.get(seriesUrl)])

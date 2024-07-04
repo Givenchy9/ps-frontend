@@ -1,7 +1,8 @@
 <template>
-  <div v-if="loading" class="flex m-auto w-full"><i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i></div>
+  <div v-if="loading" class="flex m-auto w-full">
+    <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
+  </div>
   <div v-if="!loading" class="Films flex">
-  
     <div class="w-2/4">
       <table class="table-auto w-full text-white">
         <thead>
@@ -22,58 +23,54 @@
             <td class="border px-4 py-2">{{ d.genre }}</td>
 
             <td class="border px-4 py-2">
-              <button @click="handleClick(d.id)" class="bg-red-500 p-12 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                <p v-if="LoadingDelete"><i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i></p>
-                <p v-else >Delete</p>
+              <button
+                @click="handleClick(d.id)"
+                class="bg-red-500 p-12 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                <p v-if="LoadingDelete">
+                  <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-black dark:text-white"></i>
+                </p>
+                <p v-else>Delete</p>
               </button>
             </td>
-            
           </tr>
-          
         </tbody>
       </table>
     </div>
     <div class="w-2/4 p-2 fixed right-0">
       <form class="space-y-6" @submit.prevent="handleSubmit">
-
-
         <div>
-          <div class="flex items-center justify-between">
-
-            
-          </div>
+          <div class="flex items-center justify-between"></div>
           <div class="mt-2">
             <input
               v-model="title"
-            placeholder="Title"
+              placeholder="Title"
               class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
 
         <div>
+          <div class="mt-2">
+            <textarea
+              placeholder="Description"
+              v-model="description"
+              class="p-2 block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
+              rows="2"
+            ></textarea>
+          </div>
+        </div>
 
-  <div class="mt-2">
-    <textarea
-    placeholder="Description"
-      v-model="description"
-      class="p-2 block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
-      rows="2"
-    ></textarea>
-  </div>
-</div>
-        
         <div>
           <div class="mt-2">
             <select v-model="genre" class="w-full p-2 rounded-full bg-gray-200">
-              <option>Animation</option>  
+              <option>Animation</option>
               <option>Action</option>
               <option>Adventure</option>
               <option>Horror</option>
               <option>Drama</option>
               <option>Romance</option>
-            
-        </select>
+            </select>
           </div>
         </div>
         <div>
@@ -81,12 +78,9 @@
             <select v-model="content" class="w-full p-2 rounded-full bg-gray-200">
               <option>Movie</option>
               <option>Serie</option>
-            
-        </select>
+            </select>
           </div>
         </div>
-
-
 
         <div>
           <div class="mt-2">
@@ -103,7 +97,6 @@
             <input
               v-model="length"
               placeholder="Length (minutes)"
-
               class="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-400 sm:text-sm sm:leading-6"
             />
           </div>
@@ -147,7 +140,6 @@ export default defineComponent({
     const alfa = ref(false)
     const LoadingDelete = ref(false)
 
-
     const title = ref('')
     const description = ref('')
     const genre = ref('Animation')
@@ -158,9 +150,10 @@ export default defineComponent({
     const handleSubmit = () => {
       loading.value = true
 
-      console.log("huh");
+      console.log('huh')
       const token = localStorage.getItem('token')
 
+<<<<<<< Updated upstream
       let url = "http://www.chrisouboter.com/api/content/create"
       axios.post(url, {
         title: title.value,
@@ -172,57 +165,89 @@ export default defineComponent({
       }, {
           headers: {
             Authorization: `Bearer ${token}`
+=======
+      let url = 'http://api.chrisouboter.com/api/content/create'
+      axios
+        .post(
+          url,
+          {
+            title: title.value,
+            description: description.value,
+            genre: genre.value,
+            content: content.value,
+            length: length.value,
+            episodes: episodes.value
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+>>>>>>> Stashed changes
           }
-        }).then((r) => {
-          console.log(r);
-      loading.value = false
-      fetch()
-
+        )
+        .then((r) => {
+          console.log(r)
+          loading.value = false
+          fetch()
         })
     }
 
     const handleClick = (id: any) => {
-
-      console.log(id);
-      LoadingDelete.value = true;
+      console.log(id)
+      LoadingDelete.value = true
       const token = localStorage.getItem('token')
 
+<<<<<<< Updated upstream
       let url = "http://www.chrisouboter.com/api/content/delete"
+=======
+      let url = 'http://api.chrisouboter.com/api/content/delete'
+>>>>>>> Stashed changes
       axios
-      .post(url, {
-        'content_id': id
-      }, {
-          headers: {
-            Authorization: `Bearer ${token}`
+        .post(
+          url,
+          {
+            content_id: id
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        })
+        )
         .then((response) => {
           console.log(response.data.data)
           data.value = response.data.data
-          console.log(data);
+          console.log(data)
           fetch()
-          
-        });
+        })
     }
 
     const fetch = () => {
       loading.value = true
-      console.log("loaded");
+      console.log('loaded')
       const token = localStorage.getItem('token')
+<<<<<<< Updated upstream
       let url = "http://www.chrisouboter.com/api/content/all"
+=======
+      let url = 'http://api.chrisouboter.com/api/content/all'
+>>>>>>> Stashed changes
 
       axios
-      .post(url, {}, {
-          headers: {
-            Authorization: `Bearer ${token}`
+        .post(
+          url,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        })
+        )
         .then((response) => {
           console.log(response.data.data)
           data.value = response.data.data
-          LoadingDelete.value = false;
+          LoadingDelete.value = false
           loading.value = false
-        });
+        })
     }
     onMounted(fetch)
 
@@ -240,7 +265,7 @@ export default defineComponent({
       length,
       handleSubmit,
       handleClick,
-      LoadingDelete,
+      LoadingDelete
     }
   }
 })

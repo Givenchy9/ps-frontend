@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -84,7 +85,9 @@ export default {
   methods: {
     async handleSubmit() {
       this.loading = true
+
       try {
+<<<<<<< Updated upstream
         const response = await fetch('http://www.chrisouboter.com/api/user/login', {
           method: 'POST',
           headers: {
@@ -96,8 +99,29 @@ export default {
           })
         })
         console.log(response.json())
+=======
+        const csrf = await axios.get('http://api.chrisouboter.com/csrf')
+        let csrfToken = csrf.data.csrfToken
+        console.log('csrfToken = ' + csrfToken + '  :' + csrf)
+
+        const response = await axios.post(
+          'http://api.chrisouboter.com/api/user/login',
+          {
+            email: this.email,
+            password: this.password
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': csrfToken
+            }
+          }
+        )
+>>>>>>> Stashed changes
         console.log(response)
         const data = await response.json()
+        console.log(data)
+
         if (data.success) {
           localStorage.setItem('token', data.token)
           localStorage.setItem('user', JSON.stringify(data.user))

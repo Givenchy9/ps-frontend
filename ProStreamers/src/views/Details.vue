@@ -23,7 +23,11 @@ export default defineComponent({
       // Implement the actual logic to toggle the favorite status here
       let token = localStorage.getItem('token')
 
+<<<<<<< Updated upstream
       let url = 'http://www.chrisouboter.com/api/user/toggle'
+=======
+      let url = 'http://api.chrisouboter.com/api/user/toggle'
+>>>>>>> Stashed changes
 
       axios
         .post(
@@ -47,7 +51,11 @@ export default defineComponent({
       loading.value = true
 
       let token = localStorage.getItem('token')
+<<<<<<< Updated upstream
       let url = 'http://www.chrisouboter.com/api/user/check'
+=======
+      let url = 'http://api.chrisouboter.com/api/user/check'
+>>>>>>> Stashed changes
       axios
         .post(
           url,
@@ -82,7 +90,11 @@ export default defineComponent({
 
     onMounted(() => {
       loading.value = true
+<<<<<<< Updated upstream
       const url = 'http://www.chrisouboter.com/api/content/' + filmId.value
+=======
+      const url = 'http://api.chrisouboter.com/api/content/' + filmId.value
+>>>>>>> Stashed changes
       axios
         .get(url)
         .then((response) => {

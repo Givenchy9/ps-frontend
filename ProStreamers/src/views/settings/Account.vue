@@ -92,7 +92,11 @@ export default {
 
     const fetch = () => {
       const token = localStorage.getItem('token')
+<<<<<<< Updated upstream
       const url = 'http://www.chrisouboter.com/api/user/get'
+=======
+      const url = 'http://api.chrisouboter.com/api/user/get'
+>>>>>>> Stashed changes
       axios
         .get(url, {
           headers: {
@@ -120,7 +124,11 @@ export default {
       try {
         const response = await axios
           .post(
+<<<<<<< Updated upstream
             'http://www.chrisouboter.com/api/user/delete',
+=======
+            'http://api.chrisouboter.com/api/user/delete',
+>>>>>>> Stashed changes
             {},
             {
               headers: {
@@ -145,7 +153,11 @@ export default {
 
       try {
         const response = await axios.post(
+<<<<<<< Updated upstream
           'http://www.chrisouboter.com/api/user/edit',
+=======
+          'http://api.chrisouboter.com/api/user/edit',
+>>>>>>> Stashed changes
           {
             email: email.value,
             name: name.value

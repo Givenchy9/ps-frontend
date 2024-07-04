@@ -123,11 +123,15 @@ export default {
       }
 
       try {
+<<<<<<< Updated upstream
         const csrfResponse = await fetch('http://www.chrisouboter.com/csrf');
       const csrfData = await csrfResponse.json();
       const csrfToken = csrfData.csrfToken;
         console.log(csrfToken);
         const response = await fetch('http://www.chrisouboter.com/api/user/create', {
+=======
+        const response = await fetch('http://api.chrisouboter.com/api/user/create', {
+>>>>>>> Stashed changes
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

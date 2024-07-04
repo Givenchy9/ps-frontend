@@ -110,14 +110,18 @@ router.beforeEach(async (to, from, next) => {
   const time = localStorage.getItem('tokenTime')
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+<<<<<<< Updated upstream
     // redirect non-adminds to home
 
+=======
+>>>>>>> Stashed changes
     if (!token || !user || !time) {
       localStorage.clear()
       return next({ path: '/login' })
     }
     if (to.name == 'dashboard') {
       let userJSON = JSON.parse(user)
+<<<<<<< Updated upstream
       if (!(userJSON.email == 'admin@gmail.com')) {
         return next('/films')
       }
@@ -126,11 +130,28 @@ router.beforeEach(async (to, from, next) => {
     const loginDate = new Date(time)
     const now = new Date()
     const differenceInHours = (now.getTime() - loginDate.getTime()) / (1000 * 60 * 60)
+=======
+      if (userJSON.email == 'admin@gmail.com') {
+        console.log('IS ADMIN')
+      } else {
+        return next('/films')
+      }
+    }
+
+    const loginDate = new Date(time)
+    const now = new Date()
+    const differenceInHours = (now.getTime() - loginDate.getTime()) / (1000 * 60 * 60)
+    console.log('Calculated ' + differenceInHours)
+>>>>>>> Stashed changes
 
     // if token is older than 0.1 hours, check token in database
     if (differenceInHours > 0.1) {
       try {
+<<<<<<< Updated upstream
         const response = await axios.get('http://www.chrisouboter.com/api/user/get', {
+=======
+        const response = await axios.get('http://api.chrisouboter.com/api/user/get', {
+>>>>>>> Stashed changes
           headers: {
             Authorization: `Bearer ${token}`
           }

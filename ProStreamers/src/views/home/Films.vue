@@ -3,10 +3,14 @@
     <div class="filter-section fixed h-full p-4 w-1/12 shadow-lg backdrop-blur-lg">
       <div class="relative w-full m-auto">
         <i
-          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></i>
-        <input type="text"
+          class="fa-solid fa-magnifying-glass absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+        ></i>
+        <input
+          type="text"
           class="block w-full rounded-full py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-          placeholder="Search" v-model="search" />
+          placeholder="Search"
+          v-model="search"
+        />
       </div>
       <div class="rounded-xl">
         <h2 class="text-center mt-2 p-2 text-black dark:text-white">Filter genre</h2>
@@ -22,8 +26,10 @@
       </div>
       <div class="mt-2">
         <input v-model="alfa" type="checkbox" id="choose-me" class="peer hidden" />
-        <label for="choose-me"
-          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200">
+        <label
+          for="choose-me"
+          class="select-none cursor-pointer rounded-lg border-2 border-gray-200 px-2 font-bold text-gray-200 transition-colors duration-200 ease-in-out peer-checked:bg-gray-200 peer-checked:text-gray-900 peer-checked:border-gray-200"
+        >
           Alphabetical
         </label>
       </div>
@@ -32,7 +38,9 @@
       <div v-if="loading" class="p-4 loading-screen">
         <i class="fa-solid fa-spinner fa-spin-pulse fa-xl text-white"></i>
       </div>
-      <h1 v-if="data.length == 0 && !loading" class="text-black text-4xl dark:text-white">Oops, no results</h1>
+      <h1 v-if="data.length == 0 && !loading" class="text-black text-4xl dark:text-white">
+        Oops, no results
+      </h1>
 
       <div class="film-cards h-full overflow-auto">
         <FilmCard v-for="d in data" :key="d.id" :film="d" />
@@ -72,7 +80,11 @@ export default defineComponent({
 
     const filter = () => {
       loading.value = true
+<<<<<<< Updated upstream
       const url = 'http://www.chrisouboter.com/api/all/movie'
+=======
+      const url = 'http://api.chrisouboter.com/api/all/movie'
+>>>>>>> Stashed changes
 
       axios
         .get(url)
