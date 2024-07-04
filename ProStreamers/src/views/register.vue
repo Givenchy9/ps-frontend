@@ -123,7 +123,7 @@ export default {
       }
 
       try {
-        const response = await fetch('https://www.chrisouboter.com/api/user/create', {
+        const response = await fetch('https://api.chrisouboter.com/api/user/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

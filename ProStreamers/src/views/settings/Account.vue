@@ -92,7 +92,7 @@ export default {
 
     const fetch = () => {
       const token = localStorage.getItem('token')
-      const url = 'https://www.chrisouboter.com/api/user/get'
+      const url = 'https://api.chrisouboter.com/api/user/get'
       axios
         .get(url, {
           headers: {
@@ -120,7 +120,7 @@ export default {
       try {
         const response = await axios
           .post(
-            'https://www.chrisouboter.com/api/user/delete',
+            'https://api.chrisouboter.com/api/user/delete',
             {},
             {
               headers: {
@@ -145,7 +145,7 @@ export default {
 
       try {
         const response = await axios.post(
-          'https://www.chrisouboter.com/api/user/edit',
+          'https://api.chrisouboter.com/api/user/edit',
           {
             email: email.value,
             name: name.value

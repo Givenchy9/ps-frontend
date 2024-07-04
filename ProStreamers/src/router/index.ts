@@ -150,7 +150,7 @@ router.beforeEach(async (to, from, next) => {
     // if token is older than 0.1hrs > refetch API token
     if (differenceInHours > 0.1) {
       try {
-        const response = await axios.get('https://www.chrisouboter.com/api/user/get', {
+        const response = await axios.get('https://api.chrisouboter.com/api/user/get', {
           headers: {
             Authorization: `Bearer ${token}`
           }

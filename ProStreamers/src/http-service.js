@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 
 // Create an instance of axios with default configuration
 const http = axios.create({
-  baseURL: 'https://www.chrisouboter.com/api/', // Adjust this to your API base URL
+  baseURL: 'https://api.chrisouboter.com/api/', // Adjust this to your API base URL
   headers: {
     'Content-Type': 'application/json'
   }
